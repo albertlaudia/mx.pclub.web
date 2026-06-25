@@ -2,14 +2,17 @@
 
 > The web funnel that turns search into installs for the **pclub app ecosystem** (1perc, HEAL, Riseup, Resonate).
 
-This repo contains the marketing site at `positiveness.club` — a single Next.js application that promotes every app in the pclub brand, captures leads, and routes visitors to the right store listing.
+A single Next.js 15 web application that promotes every app in the pclub brand,
+captures leads, and routes visitors to the right store listing.
+
+**Live**: `https://uat.positiveness.club` (UAT) · production target `https://positiveness.club`
 
 ## What this is
 
 - **One web app** (Next.js 15 App Router) under `positiveness.club`
 - **Subpath routing** for every app page (`/apps/1perc`, `/apps/heal`, …)
 - **Marketing machine** — not a brochure. Smart App Banners, email capture, blog CMS, structured data, conversion tracking.
-- **Brand hub** — `/about`, `/privacy`, `/press`, plus a content engine at `/blog`.
+- **Brand hub** — `/about`, `/privacy`, `/manifesto`, `/press`, plus a content engine at `/blog`.
 
 ## Conversion model
 
@@ -33,40 +36,129 @@ in-app cross-promo to next pclub app
 
 | App | Slug | Category |
 |---|---|---|
-| 1perc | `1perc` | Books / audio learning |
-| HEAL | `heal` | Wellness / audio therapy |
-| Riseup | `riseup` | Habits / morning routine |
-| Resonate | `resonate` | Music / instrument tools |
+| 1perc | `1perc` | Books · Learning |
+| HEAL | `heal` | Wellness · Calm |
+| Riseup | `riseup` | Habits · Routine |
+| Resonate | `resonate` | Music · Tools |
 
 ## Tech stack
 
 - **Framework**: Next.js 15 (App Router) · TypeScript · React 19
 - **Styling**: Tailwind CSS 4 + Radix UI primitives
-- **Backend**: PocketBase (existing instance) for blog CMS, lead capture, app metadata
-- **Hosting**: Dokploy (same host as 1perc / HEAL web)
-- **DNS / CDN**: Cloudflare (positiveness.club zone)
-- **Analytics**: Plausible (privacy-first, no cookie banner needed)
-- **Email**: Resend or Postmark (lead magnet delivery)
-- **Object storage**: existing `resources.positiveness.club` (IIS via SmarterASP)
+- **Backend**: PocketBase v0.22+ (for content + leads — `pc_*` collections)
+- **Hosting**: Dokploy (project: `sites`, app: `uat.positiveness.club`)
+- **DNS / CDN**: Cloudflare
+- **Analytics**: Plausible (privacy-first, no cookie banner)
+- **Email**: Resend (lead magnet delivery)
+
+## Project structure
+
+```
+app/                          Next.js App Router
+  page.tsx                    / brand hub
+  apps/                       /apps index + per-app landings
+  blog/                       /blog index + posts
+  about, privacy, terms,
+  press, manifesto            Static pages
+  api/                        /api/leads, /api/og
+  sitemap.ts, robots.ts       SEO infrastructure
+
+components/                   React components
+  AppIcon.tsx                 Hand-crafted SVG icons
+  HeroArt.tsx                 Hand-crafted SVG hero illustrations
+  SmartCTA.tsx                The conversion engine
+  LeadMagnetForm.tsx          Email capture form
+  ...
+
+lib/
+  data/
+    apps.ts                   Apps metadata (drives /apps/[slug])
+    blog.ts                   Blog posts metadata
+  analytics.ts                Plausible event helpers
+  seo.ts                      Metadata builders
+  utm.ts                      UTM injection
+  utils.ts                    cn(), formatDate(), etc.
+
+content/blog/                 MDX blog posts
+  *.mdx
+
+docs/                         Documentation
+  ARCHITECTURE.md             Full design doc (22 sections)
+  DEPLOY.md                   Deploy guide
+  CONTENT_GUIDE.md            Editorial guide (TBD)
+  PB_SCHEMA.md                PocketBase schema (TBD)
+```
+
+## Local dev
+
+```bash
+# Prereqs: Node 22+, pnpm 9+
+corepack enable
+
+# Install
+pnpm install
+
+# Dev server (uses static data files — no PB needed)
+pnpm dev
+# → http://localhost:3000
+
+# Build
+pnpm build
+pnpm start
+
+# Lint + typecheck
+pnpm lint
+pnpm typecheck
+```
+
+## Deployment
+
+See [`docs/DEPLOY.md`](docs/DEPLOY.md) for the full guide.
+
+Quick version:
+1. Repo lives at `albertlaudia/mx.pclub.web`
+2. Dokploy app: project `sites` → app `uat.positiveness.club`
+3. Domain: `uat.positiveness.club` (HTTPS via Cloudflare)
+4. Auto-deploy on push to `main` via GitHub Action → Dokploy API
+5. First deploy MUST be triggered from Dokploy UI (API returns null for new apps)
+
+## PocketBase collections (when migrating from static data)
+
+All collections prefixed with `pc_*`:
+
+| Collection | Purpose |
+|---|---|
+| `pc_apps` | App metadata — drives `/apps/[slug]` |
+| `pc_blog_posts` | Blog posts — drives `/blog/[slug]` |
+| `pc_topics` | Blog topic taxonomy |
+| `pc_authors` | Author profiles |
+| `pc_leads` | Email captures |
+| `pc_redirects` | Short referral codes |
+
+Mirror the TS types in `lib/data/apps.ts` and `lib/data/blog.ts` — those are the contract.
 
 ## Quick links
 
-- **[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)** — the full design doc. Read this first.
-- **[`AGENTS.md`](AGENTS.md)** — project context for future agent work.
+- **[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)** — full design doc (read first)
+- **[`docs/DEPLOY.md`](docs/DEPLOY.md)** — deploy guide
+- **[`AGENTS.md`](AGENTS.md)** — project context for future agent work
 
 ## Repo conventions
 
 - `main` is always deployable
 - Feature branches: `feat/<slug>`, `fix/<slug>`, `chore/<slug>`
 - All PRs target `main`
-- Deploy on push via existing Dokploy GitHub Action (see ARCHITECTURE §19)
+- Deploy on push via GitHub Action → Dokploy
 
-## Local dev
+## Status
 
-```bash
-pnpm install
-cp .env.example .env.local   # fill in PB_URL, ANALYTICS, RESEND_KEY
-pnpm dev
-```
-
-(Not scaffolded yet — see `docs/ARCHITECTURE.md` §20 for the phased plan.)
+- [x] Repo scaffolded with Next.js 15 + TS + Tailwind 4
+- [x] All pages built (brand hub, apps, blog, about, privacy, press, manifesto)
+- [x] SEO infrastructure (sitemap, JSON-LD, OG, Smart App Banner, UTM)
+- [x] 5 SEO-targeted blog posts written
+- [x] Lead capture form (stubbed, ready for Resend)
+- [x] Dockerfile + GitHub Action for Dokploy deploy
+- [ ] PocketBase migration (collections with `pc_*` prefix)
+- [ ] Resend integration (welcome email automation)
+- [ ] Plausible live integration (domain registered)
+- [ ] Production deploy at `positiveness.club`

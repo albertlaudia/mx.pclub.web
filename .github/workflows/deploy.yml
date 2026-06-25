@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  trigger-dokploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Dokploy redeploy via API
+        env:
+          DOKPLOY_URL: ${{ secrets.DOKPLOY_URL }}
+          DOKPLOY_API_KEY: ${{ secrets.DOKPLOY_API_KEY }}
+          DOKPLOY_APP_ID: ${{ secrets.DOKPLOY_APP_ID }}
+        run: |
+          if [ -z "$DOKPLOY_API_KEY" ]; then
+            echo "::error::DOKPLOY_API_KEY secret is not set"
+            exit 1
+          fi
+          if [ -z "$DOKPLOY_APP_ID" ]; then
+            echo "::error::DOKPLOY_APP_ID secret is not set"
+            exit 1
+          fi
+          echo "Triggering redeploy for app $DOKPLOY_APP_ID on $DOKPLOY_URL"
+          curl -sS -X POST "${DOKPLOY_URL}/api/trpc/application.redeploy" \
+            -H "x-api-key: ${DOKPLOY_API_KEY}" \
+            -H "Content-Type: application/json" \
+            -d "{\"json\":{\"applicationId\":\"${DOKPLOY_APP_ID}\"}}"
+          echo "Triggered. Check Dokploy for build progress."
