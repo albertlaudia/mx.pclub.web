@@ -46,7 +46,7 @@ in-app cross-promo to next pclub app
 - **Framework**: Next.js 15 (App Router) · TypeScript · React 19
 - **Styling**: Tailwind CSS 4 + Radix UI primitives
 - **Backend**: PocketBase v0.22+ (for content + leads — `pc_*` collections)
-- **Hosting**: Dokploy (project: `sites`, app: `uat.positiveness.club`)
+- **Hosting**: Dokploy (project: `PClub UAT`, app: `uat.positiveness.club`)
 - **DNS / CDN**: Cloudflare
 - **Analytics**: Plausible (privacy-first, no cookie banner)
 - **Email**: Resend (lead magnet delivery)
@@ -117,7 +117,7 @@ See [`docs/DEPLOY.md`](docs/DEPLOY.md) for the full guide.
 
 Quick version:
 1. Repo lives at `albertlaudia/mx.pclub.web`
-2. Dokploy app: project `sites` → app `uat.positiveness.club`
+2. Dokploy app: project `PClub UAT` → app `uat.positiveness.club`
 3. Domain: `uat.positiveness.club` (HTTPS via Cloudflare)
 4. Auto-deploy on push to `main` via GitHub Action → Dokploy API
 5. First deploy MUST be triggered from Dokploy UI (API returns null for new apps)

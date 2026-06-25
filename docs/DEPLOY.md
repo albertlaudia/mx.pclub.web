@@ -2,7 +2,7 @@
 
 ## Target
 
-- **Project**: `sites` (Dokploy)
+- **Project**: `PClub UAT` (Dokploy)
 - **App**: `uat.positiveness.club` (UAT / staging)
 - **Path in repo**: `mx.pclub.web/`
 - **Production target (later)**: `positiveness.club`
@@ -13,7 +13,7 @@
 
 ### 1. Create the app
 
-In the `sites` project, create a new app:
+In the `PClub UAT` project, create a new app:
 
 - **Type**: Application (not a database, not a service)
 - **Name**: `uat.positiveness.club` (or `mx-pclub-web-uat` — whatever you prefer)
