@@ -76,6 +76,16 @@ This repo lives under `mx.pclub.*` because it's the pclub brand's web platform.
 - **Accessibility floor**: WCAG 2.1 AA. No shipping without axe passing.
 - **No stock photos**: custom illustrations, typography, or app screenshots only.
 
+## Deploy triggers
+
+`.github/workflows/deploy.yml` fires on **3 triggers**:
+
+1. `push` to `main` — every commit auto-deploys
+2. `workflow_dispatch` — manual trigger from Actions tab
+3. `schedule: 0 */6 * * *` — every 6 hours UTC, periodic resync
+
+The action calls `/api/trpc/application.redeploy` on Dokploy with the app ID from the `DOKPLOY_APP_ID` secret, then verifies `applicationStatus != 'error'` and that the site returns HTTP 200.
+
 ## Cross-project context
 
 This repo is one of ~10 projects under the positiveness.club brand. See agent MEMORY.md (root session) for:

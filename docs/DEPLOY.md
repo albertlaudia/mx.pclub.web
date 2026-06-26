@@ -88,9 +88,21 @@ In `https://github.com/albertlaudia/mx.pclub.web/settings/secrets/actions`:
 | `DOKPLOY_URL` | `https://dokploy.scaleupcrm.com` |
 | `DOKPLOY_API_KEY` | your Dokploy API key |
 | `DOKPLOY_APP_ID` | `TuEvJmGHhY8YVkz1FAdeI` (already known) |
+| `SITE_URL` | `https://uat.positiveness.club` (for the HTTP check) |
 
 After secrets are set, push to `main` and the GitHub Action at
 `.github/workflows/deploy.yml` will auto-trigger a redeploy.
+
+### Deploy triggers (3 ways)
+
+The `deploy.yml` workflow fires on:
+
+1. **`push` to `main`** — every commit auto-deploys
+2. **`workflow_dispatch`** — manual trigger from the Actions tab (with a reason field for logs)
+3. **`schedule: 0 */6 * * *`** — every 6 hours (00:00, 06:00, 12:00, 18:00 UTC). Periodic resync so Dokploy always has the latest `main`, even without a push.
+
+Each run also verifies the build succeeded (`applicationStatus != 'error'`)
+and that the site returns HTTP 200 after a 30s warmup.
 
 ---
 

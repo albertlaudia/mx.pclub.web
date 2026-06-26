@@ -1,14 +1,52 @@
 name: Deploy
 
+# Trigger sources:
+#   - push to main           → auto-deploy on every commit
+#   - workflow_dispatch      → manual trigger from GitHub UI
+#   - schedule (every 6h)    → periodic sync, ensures Dokploy always has latest main
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Why are you triggering this deploy?'
+        required: false
+        default: 'manual trigger'
+  schedule:
+    # Every 6 hours: 00:00, 06:00, 12:00, 18:00 UTC
+    # Use this for periodic resync to Dokploy — e.g. after out-of-band DB changes,
+    # env var updates, or just to be safe. Cheap (one API call) and idempotent.
+    - cron: '0 */6 * * *'
+
+concurrency:
+  # Don't run two deploys at once — serialize per application.
+  group: deploy-uat-positiveness-club
+  cancel-in-progress: false
 
 jobs:
   trigger-dokploy:
+    name: Trigger Dokploy redeploy
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
+      - name: Resolve trigger source
+        id: trigger
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "source=push" >> "$GITHUB_OUTPUT"
+            echo "commit=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+            echo "message=${{ github.event.head_commit.message }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "source=schedule" >> "$GITHUB_OUTPUT"
+            echo "commit=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+            echo "message=Periodic resync (every 6h)" >> "$GITHUB_OUTPUT"
+          else
+            echo "source=manual" >> "$GITHUB_OUTPUT"
+            echo "commit=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+            echo "message=${{ inputs.reason }}" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Trigger Dokploy redeploy via API
         env:
           DOKPLOY_URL: ${{ secrets.DOKPLOY_URL }}
@@ -23,9 +61,51 @@ jobs:
             echo "::error::DOKPLOY_APP_ID secret is not set"
             exit 1
           fi
+          echo "::group::Trigger"
           echo "Triggering redeploy for app $DOKPLOY_APP_ID on $DOKPLOY_URL"
+          echo "Source: ${{ steps.trigger.outputs.source }}"
+          echo "Commit: ${{ steps.trigger.outputs.commit }}"
+          echo "Message: ${{ steps.trigger.outputs.message }}"
           curl -sS -X POST "${DOKPLOY_URL}/api/trpc/application.redeploy" \
             -H "x-api-key: ${DOKPLOY_API_KEY}" \
             -H "Content-Type: application/json" \
             -d "{\"json\":{\"applicationId\":\"${DOKPLOY_APP_ID}\"}}"
+          echo ""
           echo "Triggered. Check Dokploy for build progress."
+          echo "::endgroup::"
+
+      - name: Wait briefly for build start
+        run: sleep 15
+
+      - name: Check deployment status
+        id: status
+        env:
+          DOKPLOY_URL: ${{ secrets.DOKPLOY_URL }}
+          DOKPLOY_API_KEY: ${{ secrets.DOKPLOY_API_KEY }}
+          DOKPLOY_APP_ID: ${{ secrets.DOKPLOY_APP_ID }}
+        run: |
+          INPUT=$(python3 -c "import json,urllib.parse;print(urllib.parse.quote(json.dumps({'json':{'applicationId':'${DOKPLOY_APP_ID}'}})))")
+          RESP=$(curl -sS "${DOKPLOY_URL}/api/trpc/application.one?input=${INPUT}" \
+            -H "x-api-key: ${DOKPLOY_API_KEY}")
+          STATUS=$(echo "$RESP" | python3 -c "import json,sys;print(json.load(sys.stdin)['result']['data']['json']['applicationStatus'])" 2>/dev/null || echo "unknown")
+          echo "Application status: $STATUS"
+          echo "status=$STATUS" >> "$GITHUB_OUTPUT"
+          if [ "$STATUS" = "error" ]; then
+            echo "::warning::Application status is 'error' after redeploy. Check Dokploy logs."
+            exit 1
+          fi
+
+      - name: Verify HTTP responds
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+        run: |
+          if [ -z "$SITE_URL" ]; then
+            SITE_URL="https://uat.positiveness.club"
+          fi
+          sleep 30  # give container time to start
+          HTTP=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 30 "$SITE_URL/" || echo "000")
+          echo "HTTP $HTTP from $SITE_URL/"
+          if [ "$HTTP" != "200" ]; then
+            echo "::warning::Site returned HTTP $HTTP (expected 200)."
+            exit 1
+          fi
