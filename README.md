@@ -161,4 +161,4 @@ Mirror the TS types in `lib/data/apps.ts` and `lib/data/blog.ts` — those are t
 - [ ] PocketBase migration (collections with `pc_*` prefix)
 - [ ] Resend integration (welcome email automation)
 - [ ] Plausible live integration (domain registered)
-- [ ] Production deploy at `positiveness.club`
+- [ ] Production deploy at `positiveness.club`// trigger fresh build
