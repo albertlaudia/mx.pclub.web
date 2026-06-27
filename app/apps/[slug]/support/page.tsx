@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import { Mail, MessageCircle } from 'lucide-react'
 import { notFound } from 'next/navigation'
-import { apps, getApp } from '@/lib/data/apps'
+import { getApps, getApp } from '@/lib/data'
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const apps = await getApps()
   return apps.map((a) => ({ slug: a.slug }))
 }
 
@@ -11,7 +12,7 @@ export async function generateMetadata({
   params,
 }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const app = getApp(slug)
+  const app = await getApp(slug)
   if (!app) return {}
   return {
     title: `${app.name} — Support`,
@@ -23,7 +24,7 @@ export default async function AppSupportPage({
   params,
 }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const app = getApp(slug)
+  const app = await getApp(slug)
   if (!app) notFound()
 
   return (

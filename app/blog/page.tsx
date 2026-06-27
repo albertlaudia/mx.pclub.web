@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { BlogCard } from '@/components/BlogCard'
 import { JsonLd } from '@/components/JsonLd'
-import { blogPosts, getPublishedPosts, topics } from '@/lib/data/blog'
+import { getPosts, getTopics } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/blog` },
 }
 
-export default function BlogIndexPage() {
-  const posts = getPublishedPosts()
+export default async function BlogIndexPage() {
+  const [posts, topics] = await Promise.all([getPosts(), getTopics()])
   const featured = posts.find((p) => p.featured) || posts[0]
   const rest = posts.filter((p) => p.slug !== featured?.slug)
 

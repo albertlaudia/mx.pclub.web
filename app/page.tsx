@@ -6,8 +6,7 @@ import { BlogCard } from '@/components/BlogCard'
 import { Button } from '@/components/Button'
 import { JsonLd } from '@/components/JsonLd'
 import { LeadMagnetForm } from '@/components/LeadMagnetForm'
-import { apps } from '@/lib/data/apps'
-import { getPublishedPosts } from '@/lib/data/blog'
+import { getApps, getPosts } from '@/lib/data'
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -16,8 +15,9 @@ export const metadata: Metadata = {
   alternates: { canonical: SITE_URL },
 }
 
-export default function HomePage() {
-  const recentPosts = getPublishedPosts().slice(0, 3)
+export default async function HomePage() {
+  const [apps, allPosts] = await Promise.all([getApps(), getPosts()])
+  const recentPosts = allPosts.slice(0, 3)
   const featuredApp = apps[0]
   const otherApps = apps.slice(1)
 

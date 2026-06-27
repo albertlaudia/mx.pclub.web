@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Download, Mail } from 'lucide-react'
-import { apps } from '@/lib/data/apps'
+import { getApps } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/press` },
 }
 
-export default function PressPage() {
+export default async function PressPage() {
+  const apps = await getApps()
   return (
     <article className="container-wide py-16 md:py-24">
       <div className="max-w-3xl mb-16">

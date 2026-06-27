@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { AppCard } from '@/components/AppCard'
 import { JsonLd } from '@/components/JsonLd'
-import { apps } from '@/lib/data/apps'
+import { getApps } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -10,7 +10,8 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/apps` },
 }
 
-export default function AppsIndexPage() {
+export default async function AppsIndexPage() {
+  const apps = await getApps()
   const itemListLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',

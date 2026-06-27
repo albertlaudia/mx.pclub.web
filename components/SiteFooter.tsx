@@ -1,8 +1,9 @@
 import Link from 'next/link'
-import { apps } from '@/lib/data/apps'
+import { getApps } from '@/lib/data'
 import { Logo } from './Logo'
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const apps = await getApps()
   return (
     <footer className="mt-32 border-t border-line bg-card">
       <div className="container-wide py-16">

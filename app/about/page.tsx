@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { apps } from '@/lib/data/apps'
+import { getApps } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/about` },
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const apps = await getApps()
   return (
     <article className="container-narrow py-16 md:py-24">
       <h1 className="text-display-lg font-bold tracking-tight mb-6">

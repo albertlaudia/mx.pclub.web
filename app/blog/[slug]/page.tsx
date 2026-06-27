@@ -8,22 +8,22 @@ import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import { AppCard } from '@/components/AppCard'
 import { JsonLd } from '@/components/JsonLd'
-import { SmartCTA } from '@/components/SmartCTA'
-import { getApp } from '@/lib/data/apps'
-import { getPost, getPublishedPosts, getRelatedPosts } from '@/lib/data/blog'
+import { SmartCTAServer } from '@/components/SmartCTA'
+import { getApp, getPost, getPosts, getRelatedPosts, getPostBody } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
 import { formatDate } from '@/lib/utils'
 import { mdxComponents } from '@/components/mdx'
 
-export function generateStaticParams() {
-  return getPublishedPosts().map((p) => ({ slug: p.slug }))
+export async function generateStaticParams() {
+  const posts = await getPosts()
+  return posts.map((p) => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({
   params,
 }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const post = getPost(slug)
+  const post = await getPost(slug)
   if (!post) return {}
   return {
     title: post.title,
@@ -47,20 +47,20 @@ export default async function BlogPostPage({
   params,
 }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const post = getPost(slug)
+  const post = await getPost(slug)
   if (!post) notFound()
 
-  const relatedApp = post.relatedApp ? getApp(post.relatedApp) : null
-  const relatedPosts = getRelatedPosts(slug, 3)
+  const [relatedApp, relatedPosts, body] = await Promise.all([
+    post.relatedApp ? getApp(post.relatedApp) : Promise.resolve(null),
+    getRelatedPosts(slug, 3),
+    getPostBody(slug),
+  ])
 
   let content
   try {
-    const fs = await import('node:fs/promises')
-    const path = await import('node:path')
-    const filePath = path.join(process.cwd(), 'content', 'blog', `${slug}.mdx`)
-    const source = await fs.readFile(filePath, 'utf8')
+    if (!body) throw new Error("no body")
     const compiled = await compileMDX({
-      source,
+      source: body,
       components: mdxComponents,
       options: {
         mdxOptions: {
@@ -176,7 +176,7 @@ export default async function BlogPostPage({
                 {relatedApp.name}
               </h3>
               <p className="text-mute mb-6 max-w-md mx-auto">{relatedApp.tagline}</p>
-              <SmartCTA app={relatedApp.slug} placement="blog-mid" size="md" />
+              <SmartCTAServer app={relatedApp} placement="blog-mid" size="md" />
             </div>
           </div>
         )}
@@ -187,7 +187,7 @@ export default async function BlogPostPage({
         <div className="container-narrow pb-16">
           <div className="text-center">
             <p className="text-mute mb-4">Liked this? Try the app.</p>
-            <SmartCTA app={relatedApp.slug} placement="blog-end" size="md" />
+            <SmartCTAServer app={relatedApp} placement="blog-end" size="md" />
           </div>
         </div>
       )}

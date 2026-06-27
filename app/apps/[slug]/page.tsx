@@ -11,12 +11,12 @@ import { LeadMagnetForm } from '@/components/LeadMagnetForm'
 import { RatingBadge } from '@/components/RatingBadge'
 import { ScreenshotMock } from '@/components/ScreenshotMock'
 import { SmartAppBannerMeta } from '@/components/SmartAppBannerMeta'
-import { SmartCTA } from '@/components/SmartCTA'
-import { apps, getApp, getOtherApps } from '@/lib/data/apps'
-import { getPostsByApp } from '@/lib/data/blog'
+import { SmartCTAServer } from '@/components/SmartCTA'
+import { getApps, getApp, getOtherApps, getPostsByApp } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const apps = await getApps()
   return apps.map((a) => ({ slug: a.slug }))
 }
 
@@ -24,7 +24,7 @@ export async function generateMetadata({
   params,
 }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const app = getApp(slug)
+  const app = await getApp(slug)
   if (!app) return {}
   return {
     title: `${app.name} — ${app.tagline}`,
@@ -44,11 +44,13 @@ export default async function AppLandingPage({
   params,
 }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const app = getApp(slug)
+  const app = await getApp(slug)
   if (!app) notFound()
 
-  const others = getOtherApps(slug, 3)
-  const relatedPosts = getPostsByApp(slug).slice(0, 2)
+  const [others, relatedPosts] = await Promise.all([
+    getOtherApps(slug, 3),
+    getPostsByApp(slug).then((p) => p.slice(0, 2)),
+  ])
 
   // JSON-LD: SoftwareApplication
   const softwareLd = {
@@ -115,8 +117,8 @@ export default async function AppLandingPage({
               )}
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <SmartCTA
-                  app={app.slug}
+                <SmartCTAServer
+                  app={app}
                   placement="hero"
                   variant="primary"
                   size="lg"
@@ -279,7 +281,7 @@ export default async function AppLandingPage({
           <h2 className="text-display-md font-bold tracking-tight">Ready when you are.</h2>
           <p className="mt-4 text-lg text-mute max-w-xl mx-auto">{app.ctaSubtext}</p>
           <div className="mt-8">
-            <SmartCTA app={app.slug} placement="final" variant="primary" size="lg" />
+            <SmartCTAServer app={app} placement="final" variant="primary" size="lg" />
           </div>
         </div>
       </section>
