@@ -6,10 +6,24 @@
 
 `positiveness.club` marketing platform — a single Next.js web app that promotes the pclub app ecosystem (1perc, HEAL, Riseup, Resonate) and converts search/visit traffic into app installs.
 
-**Live URL**: `positiveness.club` (TBD)
+**Live URL**: `uat.positiveness.club` (UAT) · production: `positiveness.club` (TBD)
 **Repo**: `albertlaudia/mx.pclub.web`
 **Author**: @albertlaudia
-**Status (2026-06-25)**: Pre-build. Design phase complete. See `docs/ARCHITECTURE.md` for the full design.
+**Status (2026-06-27)**: Built. PocketBase migration complete (pc_* collections are source of truth in prod). Static data in `lib/data/{apps,blog}.ts` is the local-dev fallback.
+
+## Data layer
+
+- **Production**: PocketBase at `https://pocketbase.scaleupcrm.com` (collections prefixed `pc_*`).
+  - `pc_apps` — app metadata
+  - `pc_blog_posts` — post metadata + MDX body in editor field
+  - `pc_topics` — taxonomy
+  - `pc_authors` — author profiles
+  - `pc_leads` — email capture (created by `/api/leads`)
+  - `pc_redirects` — short referral codes
+- **Local dev / fallback**: static TS data in `lib/data/apps.ts` and `lib/data/blog.ts`. Used when `NEXT_PUBLIC_PB_URL` is unset or PB is unreachable.
+- **Single source-of-truth selector**: `lib/data/index.ts` exports async getters that auto-pick PB or static. All pages use these.
+- **Seed script**: `scripts/seed-pocketbase.ts` (run with `tsx`). Idempotent (upserts by slug).
+- **Migration JSON**: `pb_migrations/0001_initial_pc_collections.json` (can be replayed via PB admin import).
 
 ## Core job
 
