@@ -98,4 +98,3 @@ export default async function AppPrivacyPage({ params }: { params: Promise<{ slu
     </article>
   )
 }
-

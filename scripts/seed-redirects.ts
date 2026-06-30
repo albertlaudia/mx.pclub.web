@@ -143,7 +143,7 @@ const REDIRECTS: Array<[string, string, string, string]> = [
   // Regional variants for app stores that don't accept direct URLs with paths.
   ['legal-privacy', `${SITE_URL}/heal/policies`, '', 'Generic Privacy Policy'],
   ['legal-terms', `${SITE_URL}/heal/tnc`, '', 'Generic Terms'],
-]  
+]
 
 async function main() {
   console.log('→ Seeding redirects...')

@@ -1,5 +1,5 @@
 import { getApp, getApps } from '@/lib/data'
-import { Mail, MessageCircle, FileText } from 'lucide-react'
+import { FileText, Mail, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -62,7 +62,9 @@ export default async function AppSupportPage({ params }: { params: Promise<{ slu
             <Link href="/heal/tnc" className="card card-hover group">
               <FileText className="text-coral mb-3" size={24} />
               <h3 className="font-semibold mb-1">Terms & Conditions</h3>
-              <p className="text-sm text-mute">Subscription terms, medical disclaimer, arbitration.</p>
+              <p className="text-sm text-mute">
+                Subscription terms, medical disclaimer, arbitration.
+              </p>
               <p className="text-xs text-mute mt-2 group-hover:text-coral">Read /heal/tnc →</p>
             </Link>
             <Link href="/heal/policies" className="card card-hover group">
@@ -89,4 +91,3 @@ export default async function AppSupportPage({ params }: { params: Promise<{ slu
     </article>
   )
 }
-
