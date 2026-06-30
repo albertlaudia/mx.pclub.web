@@ -1,9 +1,9 @@
 'use client'
 
-import { CheckCircle2, Loader2 } from 'lucide-react'
-import { useState, useTransition } from 'react'
 import { trackEvent } from '@/lib/analytics'
 import { cn } from '@/lib/utils'
+import { CheckCircle2, Loader2 } from 'lucide-react'
+import { useState, useTransition } from 'react'
 
 interface LeadMagnetFormProps {
   source: string // "homepage-hero" | "app-1perc" | "blog-<slug>" | ...
@@ -90,10 +90,7 @@ export function LeadMagnetForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className={cn(
-        'flex flex-col gap-3 rounded-2xl border border-line bg-card p-5',
-        className,
-      )}
+      className={cn('flex flex-col gap-3 rounded-2xl border border-line bg-card p-5', className)}
     >
       {(headline || subtext) && (
         <div className="mb-1">

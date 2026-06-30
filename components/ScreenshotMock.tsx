@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils'
 import type { PclubApp } from '@/lib/data/apps'
+import { cn } from '@/lib/utils'
 
 /**
  * Phone-mockup placeholder for app screenshots.
@@ -42,9 +42,7 @@ export function ScreenshotMock({ app, index = 0, className }: ScreenshotMockProp
         >
           {app.name.charAt(0)}
         </div>
-        <p className="text-xs uppercase tracking-wider text-mute font-medium">
-          {app.name}
-        </p>
+        <p className="text-xs uppercase tracking-wider text-mute font-medium">{app.name}</p>
         <p className="mt-1 text-base font-semibold text-ink">{title}</p>
         <p className="mt-2 text-xs text-mute max-w-[180px]">
           Real screenshots coming soon — placeholder for now.

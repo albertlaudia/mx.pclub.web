@@ -128,8 +128,16 @@ const HEROES = {
       {/* Horizon */}
       <rect x="0" y="380" width="800" height="220" fill="#7C2D12" opacity="0.15" />
       {/* Mountains */}
-      <path d="M0 380 L150 280 L280 340 L420 250 L560 320 L700 270 L800 340 L800 380 Z" fill="#9A3412" opacity="0.3" />
-      <path d="M0 400 L120 360 L260 400 L400 350 L540 400 L680 360 L800 400 L800 420 L0 420 Z" fill="#7C2D12" opacity="0.4" />
+      <path
+        d="M0 380 L150 280 L280 340 L420 250 L560 320 L700 270 L800 340 L800 380 Z"
+        fill="#9A3412"
+        opacity="0.3"
+      />
+      <path
+        d="M0 400 L120 360 L260 400 L400 350 L540 400 L680 360 L800 400 L800 420 L0 420 Z"
+        fill="#7C2D12"
+        opacity="0.4"
+      />
       {/* Stars */}
       <g fill="#7C2D12">
         <circle cx="160" cy="120" r="2" opacity="0.6" />

@@ -38,11 +38,23 @@ const config: Config = {
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       fontSize: {
-        'display-2xl': ['4.5rem', { lineHeight: '1.05', letterSpacing: '-0.02em', fontWeight: '700' }],
-        'display-xl': ['3.75rem', { lineHeight: '1.05', letterSpacing: '-0.02em', fontWeight: '700' }],
+        'display-2xl': [
+          '4.5rem',
+          { lineHeight: '1.05', letterSpacing: '-0.02em', fontWeight: '700' },
+        ],
+        'display-xl': [
+          '3.75rem',
+          { lineHeight: '1.05', letterSpacing: '-0.02em', fontWeight: '700' },
+        ],
         'display-lg': ['3rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }],
-        'display-md': ['2.25rem', { lineHeight: '1.15', letterSpacing: '-0.01em', fontWeight: '600' }],
-        'display-sm': ['1.875rem', { lineHeight: '1.2', letterSpacing: '-0.01em', fontWeight: '600' }],
+        'display-md': [
+          '2.25rem',
+          { lineHeight: '1.15', letterSpacing: '-0.01em', fontWeight: '600' },
+        ],
+        'display-sm': [
+          '1.875rem',
+          { lineHeight: '1.2', letterSpacing: '-0.01em', fontWeight: '600' },
+        ],
       },
       spacing: {
         18: '4.5rem',

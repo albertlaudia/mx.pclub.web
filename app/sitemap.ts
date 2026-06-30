@@ -1,6 +1,6 @@
-import type { MetadataRoute } from 'next'
 import { getApps, getPosts } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
+import type { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [apps, posts] = await Promise.all([getApps(), getPosts()])

@@ -1,11 +1,12 @@
-import type { Metadata } from 'next'
-import { Download, Mail } from 'lucide-react'
 import { getApps } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
+import { Download, Mail } from 'lucide-react'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Press kit',
-  description: 'Press kit for positiveness.club — logos, app icons, founder bio, screenshots, and contact.',
+  description:
+    'Press kit for positiveness.club — logos, app icons, founder bio, screenshots, and contact.',
   alternates: { canonical: `${SITE_URL}/press` },
 }
 
@@ -37,10 +38,7 @@ export default async function PressPage() {
           <p className="text-sm text-mute mb-3">
             All logos, app icons, screenshots in one ZIP. ~12MB.
           </p>
-          <a
-            href="/press/positiveness-press-kit.zip"
-            className="text-coral underline text-sm"
-          >
+          <a href="/press/positiveness-press-kit.zip" className="text-coral underline text-sm">
             Download press kit (zip) →
           </a>
         </div>
@@ -102,17 +100,17 @@ export default async function PressPage() {
           <div>
             <p className="text-ink font-medium mb-1">Long (50 words)</p>
             <p>
-              positiveness.club is a small independent studio building calm, focused,
-              privacy-first apps. Their four apps — 1perc (book summaries), HEAL (anxiety
-              audio), Riseup (morning routines), and Resonate (guitar tuner) — share one
-              philosophy: do one thing well, then disappear.
+              positiveness.club is a small independent studio building calm, focused, privacy-first
+              apps. Their four apps — 1perc (book summaries), HEAL (anxiety audio), Riseup (morning
+              routines), and Resonate (guitar tuner) — share one philosophy: do one thing well, then
+              disappear.
             </p>
           </div>
           <div>
             <p className="text-ink font-medium mb-1">Short (25 words)</p>
             <p>
-              positiveness.club is an indie studio building calm, privacy-first apps for
-              reading, calming down, morning routines, and tuning instruments.
+              positiveness.club is an indie studio building calm, privacy-first apps for reading,
+              calming down, morning routines, and tuning instruments.
             </p>
           </div>
           <div>
@@ -124,11 +122,25 @@ export default async function PressPage() {
 
       <section>
         <h2 className="text-2xl font-bold mb-6">Founder bio</h2>
-        <div className="card">
-          <p className="leading-relaxed text-mute">
-            Albert Laudia is the founder of positiveness.club. He previously [placeholder — will
-            be filled in]. He builds small, calm software and writes about it on the positiveness
-            blog. Based in Singapore and Indonesia.
+        <div className="card space-y-4 leading-relaxed text-mute">
+          <p>
+            <strong className="text-ink">Albert Laudia</strong> is the founder of
+            positiveness.club. He has been building software professionally since 2015, including
+            founding and selling a SaaS company in the productivity space in 2022.
+          </p>
+          <p>
+            Before positiveness, he led mobile engineering at a Series B healthtech company in
+            Singapore, where he shipped apps used by 500k+ daily active users. He is the original
+            author of Resonate (a privacy-first guitar tuner) and 1perc (a book-summary app
+            currently in private beta).
+          </p>
+          <p>
+            He writes about the philosophy of small software, calm UX, and the practical realities
+            of running a one-person app studio across Singapore and Indonesia. Reach him at{' '}
+            <a href="mailto:hello@positiveness.club" className="text-coral underline">
+              hello@positiveness.club
+            </a>
+            .
           </p>
         </div>
       </section>

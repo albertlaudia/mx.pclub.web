@@ -1,7 +1,3 @@
-import Link from 'next/link'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { AppCard } from '@/components/AppCard'
 import { AppIcon } from '@/components/AppIcon'
 import { BlogCard } from '@/components/BlogCard'
@@ -12,8 +8,12 @@ import { RatingBadge } from '@/components/RatingBadge'
 import { ScreenshotMock } from '@/components/ScreenshotMock'
 import { SmartAppBannerMeta } from '@/components/SmartAppBannerMeta'
 import { SmartCTAServer } from '@/components/SmartCTA'
-import { getApps, getApp, getOtherApps, getPostsByApp } from '@/lib/data'
+import { getApp, getApps, getOtherApps, getPostsByApp } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
+import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   const apps = await getApps()
@@ -35,14 +35,14 @@ export async function generateMetadata({
       title: app.name,
       description: app.tagline,
       url: `${SITE_URL}/apps/${app.slug}`,
-      images: [`/api/og?title=${encodeURIComponent(app.name)}&subtitle=${encodeURIComponent(app.tagline)}&accent=${encodeURIComponent(app.accentColor.replace('#', ''))}`],
+      images: [
+        `/api/og?title=${encodeURIComponent(app.name)}&subtitle=${encodeURIComponent(app.tagline)}&accent=${encodeURIComponent(app.accentColor.replace('#', ''))}`,
+      ],
     },
   }
 }
 
-export default async function AppLandingPage({
-  params,
-}: { params: Promise<{ slug: string }> }) {
+export default async function AppLandingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const app = await getApp(slug)
   if (!app) notFound()
@@ -105,9 +105,7 @@ export default async function AppLandingPage({
               <h1 className="text-display-lg md:text-display-xl font-bold tracking-tight">
                 {app.name}
               </h1>
-              <p className="mt-4 text-xl md:text-2xl text-mute leading-relaxed">
-                {app.tagline}
-              </p>
+              <p className="mt-4 text-xl md:text-2xl text-mute leading-relaxed">{app.tagline}</p>
               <p className="mt-6 text-mute leading-relaxed">{app.description}</p>
 
               {app.status === 'live' && (
@@ -187,9 +185,7 @@ export default async function AppLandingPage({
           <div className="grid gap-6 md:grid-cols-2">
             {app.testimonials.map((t) => (
               <figure key={t.author} className="card">
-                <blockquote className="text-lg leading-relaxed text-ink">
-                  "{t.quote}"
-                </blockquote>
+                <blockquote className="text-lg leading-relaxed text-ink">"{t.quote}"</blockquote>
                 <figcaption className="mt-4 text-sm text-mute">
                   — {t.author}, <span>{t.source}</span>
                 </figcaption>
@@ -258,9 +254,7 @@ export default async function AppLandingPage({
         <section className="container-narrow py-20 border-t border-line">
           <div className="text-center mb-8">
             <h2 className="text-display-md font-bold tracking-tight">Try before you install</h2>
-            <p className="mt-3 text-mute text-lg">
-              Get a free taste of {app.name} in your inbox.
-            </p>
+            <p className="mt-3 text-mute text-lg">Get a free taste of {app.name} in your inbox.</p>
           </div>
           <LeadMagnetForm
             source={`app-${app.slug}`}

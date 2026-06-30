@@ -1,10 +1,10 @@
 'use client'
 
 import { trackEvent } from '@/lib/analytics'
-import type { ReactNode } from 'react'
 import type { PclubApp } from '@/lib/data'
-import { buildStoreUrl, buildUtmForCta } from '@/lib/utm'
 import { cn } from '@/lib/utils'
+import { buildStoreUrl, buildUtmForCta } from '@/lib/utm'
+import type { ReactNode } from 'react'
 import { Button } from './Button'
 
 /**

@@ -1,7 +1,7 @@
+import { sendMagnetEmail } from '@/lib/email'
+import { PocketBaseError, isPbConfigured, pbCreate } from '@/lib/pb'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { isPbConfigured, pbCreate, PocketBaseError } from '@/lib/pb'
-import { sendMagnetEmail } from '@/lib/email'
 
 export const runtime = 'nodejs'
 
@@ -94,7 +94,10 @@ export async function POST(request: Request) {
         // Don't fail the user-visible request — log and continue
       }
     } else {
-      console.log('[LEAD] PB not configured, skipping persist:', { email: data.email, source: data.source })
+      console.log('[LEAD] PB not configured, skipping persist:', {
+        email: data.email,
+        source: data.source,
+      })
     }
 
     // Fire confirmation email (best-effort, never block the response)

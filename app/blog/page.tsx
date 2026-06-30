@@ -1,13 +1,15 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
 import { BlogCard } from '@/components/BlogCard'
 import { JsonLd } from '@/components/JsonLd'
 import { getPosts, getTopics } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
+import { Search as SearchIcon } from 'lucide-react'
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Field notes',
-  description: 'What we\'re learning building a small family of calm, focused apps. Books, wellness, habits, music, and the philosophy of small software.',
+  description:
+    "What we're learning building a small family of calm, focused apps. Books, wellness, habits, music, and the philosophy of small software.",
   alternates: { canonical: `${SITE_URL}/blog` },
 }
 
@@ -42,8 +44,8 @@ export default async function BlogIndexPage() {
           </p>
         </div>
 
-        {/* Topic chips */}
-        <div className="flex flex-wrap gap-2 mb-12">
+        {/* Topic chips + search */}
+        <div className="flex flex-wrap items-center gap-2 mb-12">
           <Link href="/blog" className="chip chip-active">
             All
           </Link>
@@ -52,6 +54,14 @@ export default async function BlogIndexPage() {
               {t.name}
             </Link>
           ))}
+          <Link
+            href="/blog/search"
+            className="chip ml-auto text-mute hover:text-ink"
+            aria-label="Search posts"
+          >
+            <SearchIcon className="inline-block mr-1" size={14} />
+            Search
+          </Link>
         </div>
 
         {/* Featured post */}

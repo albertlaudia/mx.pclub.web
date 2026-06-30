@@ -1,18 +1,18 @@
-import Link from 'next/link'
+import { AppCard } from '@/components/AppCard'
+import { JsonLd } from '@/components/JsonLd'
+import { SmartCTAServer } from '@/components/SmartCTA'
+import { mdxComponents } from '@/components/mdx'
+import { getApp, getPost, getPostBody, getPosts, getRelatedPosts } from '@/lib/data'
+import { SITE_URL } from '@/lib/seo'
+import { formatDate } from '@/lib/utils'
 import { Clock } from 'lucide-react'
 import type { Metadata } from 'next'
 import { compileMDX } from 'next-mdx-remote/rsc'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
-import { AppCard } from '@/components/AppCard'
-import { JsonLd } from '@/components/JsonLd'
-import { SmartCTAServer } from '@/components/SmartCTA'
-import { getApp, getPost, getPosts, getRelatedPosts, getPostBody } from '@/lib/data'
-import { SITE_URL } from '@/lib/seo'
-import { formatDate } from '@/lib/utils'
-import { mdxComponents } from '@/components/mdx'
 
 export async function generateStaticParams() {
   const posts = await getPosts()
@@ -38,14 +38,14 @@ export async function generateMetadata({
       url: `${SITE_URL}/blog/${post.slug}`,
       publishedTime: post.publishedAt,
       authors: [post.author],
-      images: [`/api/og?title=${encodeURIComponent(post.title)}&subtitle=${encodeURIComponent(post.author)}`],
+      images: [
+        `/api/og?title=${encodeURIComponent(post.title)}&subtitle=${encodeURIComponent(post.author)}`,
+      ],
     },
   }
 }
 
-export default async function BlogPostPage({
-  params,
-}: { params: Promise<{ slug: string }> }) {
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const post = await getPost(slug)
   if (!post) notFound()
@@ -58,7 +58,7 @@ export default async function BlogPostPage({
 
   let content
   try {
-    if (!body) throw new Error("no body")
+    if (!body) throw new Error('no body')
     const compiled = await compileMDX({
       source: body,
       components: mdxComponents,
@@ -77,9 +77,7 @@ export default async function BlogPostPage({
     })
     content = compiled.content
   } catch {
-    content = (
-      <p className="text-mute">Content not available.</p>
-    )
+    content = <p className="text-mute">Content not available.</p>
   }
 
   const articleLd = {
@@ -172,9 +170,7 @@ export default async function BlogPostPage({
               <p className="text-sm font-medium uppercase tracking-wider text-mute mb-2">
                 Try the app
               </p>
-              <h3 className="text-display-sm font-bold tracking-tight mb-2">
-                {relatedApp.name}
-              </h3>
+              <h3 className="text-display-sm font-bold tracking-tight mb-2">{relatedApp.name}</h3>
               <p className="text-mute mb-6 max-w-md mx-auto">{relatedApp.tagline}</p>
               <SmartCTAServer app={relatedApp} placement="blog-mid" size="md" />
             </div>
@@ -214,11 +210,7 @@ export default async function BlogPostPage({
           <h2 className="text-display-sm font-bold tracking-tight mb-8">Keep reading</h2>
           <div className="grid gap-6 md:grid-cols-3">
             {relatedPosts.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/blog/${p.slug}`}
-                className="card card-hover group"
-              >
+              <Link key={p.slug} href={`/blog/${p.slug}`} className="card card-hover group">
                 <span className="chip text-xs mb-3" style={{ color: getTopicColor(p.topic) }}>
                   {p.topic}
                 </span>

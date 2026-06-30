@@ -146,9 +146,7 @@
           "type": "text"
         }
       ],
-      "indexes": [
-        "CREATE UNIQUE INDEX idx_pc_authors_slug ON pc_authors (slug)"
-      ],
+      "indexes": ["CREATE UNIQUE INDEX idx_pc_authors_slug ON pc_authors (slug)"],
       "created": "2026-06-27 02:54:31.556Z",
       "updated": "2026-06-27 02:54:31.556Z",
       "system": false
@@ -669,12 +667,7 @@
           "required": true,
           "system": false,
           "type": "select",
-          "values": [
-            "active",
-            "beta",
-            "paused",
-            "hidden"
-          ]
+          "values": ["active", "beta", "paused", "hidden"]
         },
         {
           "help": "",
@@ -887,12 +880,7 @@
           "required": true,
           "system": false,
           "type": "select",
-          "values": [
-            "draft",
-            "scheduled",
-            "published",
-            "archived"
-          ]
+          "values": ["draft", "scheduled", "published", "archived"]
         },
         {
           "help": "",
@@ -1095,12 +1083,7 @@
           "required": true,
           "system": false,
           "type": "select",
-          "values": [
-            "new",
-            "contacted",
-            "converted",
-            "unsubscribed"
-          ]
+          "values": ["new", "contacted", "converted", "unsubscribed"]
         },
         {
           "autogeneratePattern": "",

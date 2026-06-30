@@ -1,9 +1,9 @@
-import Link from 'next/link'
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { BlogCard } from '@/components/BlogCard'
 import { getPostsByTopic, getTopics } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   const topics = await getTopics()
@@ -24,9 +24,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function TopicPage({
-  params,
-}: { params: Promise<{ topic: string }> }) {
+export default async function TopicPage({ params }: { params: Promise<{ topic: string }> }) {
   const { topic } = await params
   const [topics, posts] = await Promise.all([getTopics(), getPostsByTopic(topic)])
   const t = topics.find((x) => x.slug === topic)

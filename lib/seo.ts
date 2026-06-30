@@ -35,7 +35,7 @@ export function siteMetadata(): Metadata {
       description: SITE_DESCRIPTION,
       images: [
         {
-          url: '/api/og?title=positiveness.club&subtitle=Apps+that+make+you+a+little+more+human',
+          url: '/og.png',
           width: 1200,
           height: 630,
           alt: SITE_NAME,
@@ -46,7 +46,7 @@ export function siteMetadata(): Metadata {
       card: 'summary_large_image',
       title: SITE_NAME,
       description: SITE_DESCRIPTION,
-      images: ['/api/og?title=positiveness.club&subtitle=Apps+that+make+you+a+little+more+human'],
+      images: ['/og.png'],
       creator: '@positivenessclub',
     },
     robots: {
@@ -60,7 +60,7 @@ export function siteMetadata(): Metadata {
       },
     },
     icons: {
-      icon: '/favicon.svg',
+      icon: '/icon.svg',
       apple: '/apple-touch-icon.png',
     },
     alternates: {

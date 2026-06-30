@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import { getApps } from '@/lib/data'
+import Link from 'next/link'
 import { Logo } from './Logo'
 
 export async function SiteFooter() {
@@ -20,7 +20,10 @@ export async function SiteFooter() {
             <ul className="space-y-2.5 text-sm">
               {apps.map((app) => (
                 <li key={app.slug}>
-                  <Link href={`/apps/${app.slug}`} className="text-mute hover:text-ink transition-colors">
+                  <Link
+                    href={`/apps/${app.slug}`}
+                    className="text-mute hover:text-ink transition-colors"
+                  >
                     {app.name}
                   </Link>
                 </li>

@@ -1,6 +1,3 @@
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import type { Metadata } from 'next'
 import { AppCard } from '@/components/AppCard'
 import { BlogCard } from '@/components/BlogCard'
 import { Button } from '@/components/Button'
@@ -8,6 +5,9 @@ import { JsonLd } from '@/components/JsonLd'
 import { LeadMagnetForm } from '@/components/LeadMagnetForm'
 import { getApps, getPosts } from '@/lib/data'
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/seo'
+import { ArrowRight } from 'lucide-react'
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Apps that make you a little more human',
@@ -28,10 +28,7 @@ export default async function HomePage() {
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
     description: SITE_DESCRIPTION,
-    sameAs: [
-      'https://twitter.com/positivenessclub',
-      'https://github.com/albertlaudia',
-    ],
+    sameAs: ['https://twitter.com/positivenessclub', 'https://github.com/albertlaudia'],
   }
 
   const websiteLd = {
@@ -41,7 +38,7 @@ export default async function HomePage() {
     url: SITE_URL,
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${SITE_URL}/blog?q={search_term_string}`,
+      target: `${SITE_URL}/blog/search?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   }
@@ -56,8 +53,7 @@ export default async function HomePage() {
           <div className="max-w-3xl mx-auto text-center">
             <span className="chip mb-6">UAT preview · v0.1</span>
             <h1 className="text-display-lg md:text-display-xl font-bold tracking-tight text-balance">
-              Apps that make you a{' '}
-              <span className="gradient-text">little more human</span>
+              Apps that make you a <span className="gradient-text">little more human</span>
             </h1>
             <p className="mt-6 text-lg md:text-xl text-mute leading-relaxed max-w-2xl mx-auto">
               Book summaries in 5 minutes. Calm in 3. A morning ritual that actually fits. A guitar
@@ -141,10 +137,9 @@ export default async function HomePage() {
             that feel like work to use.
           </p>
           <p>
-            positiveness.club is the opposite. Each app does <em>one thing</em> and does it
-            well. A book summary app that respects your time. A calm app that respects your
-            mental state. A morning app that respects your actual life. A guitar tuner that
-            respects your data.
+            positiveness.club is the opposite. Each app does <em>one thing</em> and does it well. A
+            book summary app that respects your time. A calm app that respects your mental state. A
+            morning app that respects your actual life. A guitar tuner that respects your data.
           </p>
           <p className="text-ink font-medium">
             Small apps. Calm apps. Apps that disappear when you don't need them.
@@ -179,8 +174,8 @@ export default async function HomePage() {
         <div className="text-center mb-8">
           <h2 className="text-display-md font-bold tracking-tight">Not ready for the app?</h2>
           <p className="mt-3 text-mute text-lg">
-            Get a free 7-day book summary pack. One book a day, 5 minutes each, delivered to
-            your inbox.
+            Get a free 7-day book summary pack. One book a day, 5 minutes each, delivered to your
+            inbox.
           </p>
         </div>
         <LeadMagnetForm

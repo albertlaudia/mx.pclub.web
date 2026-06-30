@@ -8,7 +8,7 @@
  * and the data layer falls back to static data in `lib/data/*`.
  */
 
-const PB_URL = process.env.NEXT_PUBLIC_PB_URL ?? process.env.PB_URL ?? ""
+const PB_URL = process.env.NEXT_PUBLIC_PB_URL ?? process.env.PB_URL ?? ''
 
 export function isPbConfigured(): boolean {
   return PB_URL.length > 0
@@ -45,26 +45,23 @@ export class PocketBaseError extends Error {
 
   constructor(err: PbError) {
     super(err.message)
-    this.name = "PocketBaseError"
+    this.name = 'PocketBaseError'
     this.status = err.status
     this.code = err.code
     this.data = err.data
   }
 }
 
-async function pbFetch<T>(
-  path: string,
-  init?: RequestInit & { token?: string }
-): Promise<T> {
+async function pbFetch<T>(path: string, init?: RequestInit & { token?: string }): Promise<T> {
   if (!isPbConfigured()) {
     throw new PocketBaseError({
       status: 0,
-      message: "PB_URL not configured",
+      message: 'PB_URL not configured',
     })
   }
-  const url = `${PB_URL.replace(/\/$/, "")}${path}`
+  const url = `${PB_URL.replace(/\/$/, '')}${path}`
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   }
   if (init?.headers) {
     Object.assign(headers, init.headers)
@@ -75,7 +72,7 @@ async function pbFetch<T>(
     ...init,
     headers,
     // Cache for 60s on the Next.js data cache; fresh on revalidation.
-    next: { revalidate: 60, tags: ["pb", path.split("?")[0]] },
+    next: { revalidate: 60, tags: ['pb', path.split('?')[0]] },
   })
 
   if (!res.ok) {
@@ -94,20 +91,20 @@ async function pbFetch<T>(
 export async function pbList<T>(
   collection: string,
   opts: PbListOptions = {},
-  token?: string
+  token?: string,
 ): Promise<PbListResult<T>> {
   const params = new URLSearchParams()
-  if (opts.page) params.set("page", String(opts.page))
-  if (opts.perPage) params.set("perPage", String(opts.perPage))
-  if (opts.filter) params.set("filter", opts.filter)
-  if (opts.sort) params.set("sort", opts.sort)
-  if (opts.expand) params.set("expand", opts.expand)
-  if (opts.fields) params.set("fields", opts.fields)
+  if (opts.page) params.set('page', String(opts.page))
+  if (opts.perPage) params.set('perPage', String(opts.perPage))
+  if (opts.filter) params.set('filter', opts.filter)
+  if (opts.sort) params.set('sort', opts.sort)
+  if (opts.expand) params.set('expand', opts.expand)
+  if (opts.fields) params.set('fields', opts.fields)
 
   const query = params.toString()
   return pbFetch<PbListResult<T>>(
-    `/api/collections/${collection}/records${query ? `?${query}` : ""}`,
-    { token }
+    `/api/collections/${collection}/records${query ? `?${query}` : ''}`,
+    { token },
   )
 }
 
@@ -115,9 +112,9 @@ export async function pbGet<T>(
   collection: string,
   id: string,
   expand?: string,
-  token?: string
+  token?: string,
 ): Promise<T> {
-  const q = expand ? `?expand=${encodeURIComponent(expand)}` : ""
+  const q = expand ? `?expand=${encodeURIComponent(expand)}` : ''
   return pbFetch<T>(`/api/collections/${collection}/records/${id}${q}`, { token })
 }
 
@@ -125,7 +122,7 @@ export async function pbFirst<T>(
   collection: string,
   filter: string,
   sort?: string,
-  token?: string
+  token?: string,
 ): Promise<T | null> {
   const result = await pbList<T>(collection, { filter, sort, perPage: 1 }, token)
   return result.items[0] ?? null
@@ -134,10 +131,10 @@ export async function pbFirst<T>(
 export async function pbCreate<T>(
   collection: string,
   data: Record<string, unknown>,
-  token?: string
+  token?: string,
 ): Promise<T> {
   return pbFetch<T>(`/api/collections/${collection}/records`, {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(data),
     token,
   })
@@ -147,22 +144,18 @@ export async function pbUpdate<T>(
   collection: string,
   id: string,
   data: Record<string, unknown>,
-  token?: string
+  token?: string,
 ): Promise<T> {
   return pbFetch<T>(`/api/collections/${collection}/records/${id}`, {
-    method: "PATCH",
+    method: 'PATCH',
     body: JSON.stringify(data),
     token,
   })
 }
 
-export async function pbDelete(
-  collection: string,
-  id: string,
-  token?: string
-): Promise<void> {
+export async function pbDelete(collection: string, id: string, token?: string): Promise<void> {
   await pbFetch<unknown>(`/api/collections/${collection}/records/${id}`, {
-    method: "DELETE",
+    method: 'DELETE',
     token,
   })
 }
@@ -182,13 +175,13 @@ export async function pbSuperuserAuth(): Promise<string | null> {
 
   try {
     const res = await fetch(
-      `${PB_URL.replace(/\/$/, "")}/api/collections/_superusers/auth-with-password`,
+      `${PB_URL.replace(/\/$/, '')}/api/collections/_superusers/auth-with-password`,
       {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identity, password }),
-        cache: "no-store",
-      }
+        cache: 'no-store',
+      },
     )
     if (!res.ok) return null
     const json = (await res.json()) as { token: string }
@@ -205,13 +198,13 @@ export async function pbSuperuserAuth(): Promise<string | null> {
 // Helper for admin operations
 export async function pbAdminList<T>(
   collection: string,
-  opts: PbListOptions = {}
+  opts: PbListOptions = {},
 ): Promise<PbListResult<T>> {
   const token = await pbSuperuserAuth()
   if (!token) {
     throw new PocketBaseError({
       status: 401,
-      message: "PB superuser creds missing",
+      message: 'PB superuser creds missing',
     })
   }
   return pbList<T>(collection, opts, token)
@@ -219,13 +212,13 @@ export async function pbAdminList<T>(
 
 export async function pbAdminCreate<T>(
   collection: string,
-  data: Record<string, unknown>
+  data: Record<string, unknown>,
 ): Promise<T> {
   const token = await pbSuperuserAuth()
   if (!token) {
     throw new PocketBaseError({
       status: 401,
-      message: "PB superuser creds missing",
+      message: 'PB superuser creds missing',
     })
   }
   return pbCreate<T>(collection, data, token)
@@ -234,13 +227,13 @@ export async function pbAdminCreate<T>(
 export async function pbAdminUpdate<T>(
   collection: string,
   id: string,
-  data: Record<string, unknown>
+  data: Record<string, unknown>,
 ): Promise<T> {
   const token = await pbSuperuserAuth()
   if (!token) {
     throw new PocketBaseError({
       status: 401,
-      message: "PB superuser creds missing",
+      message: 'PB superuser creds missing',
     })
   }
   return pbUpdate<T>(collection, id, data, token)

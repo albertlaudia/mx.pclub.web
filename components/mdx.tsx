@@ -24,16 +24,10 @@ export const mdxComponents: MDXComponents = {
     />
   ),
   code: (props) => (
-    <code
-      className="px-1.5 py-0.5 rounded bg-line/40 text-[0.9em] font-mono text-ink"
-      {...props}
-    />
+    <code className="px-1.5 py-0.5 rounded bg-line/40 text-[0.9em] font-mono text-ink" {...props} />
   ),
   pre: (props) => (
-    <pre
-      className="my-6 p-5 rounded-2xl bg-ink text-canvas overflow-x-auto text-sm"
-      {...props}
-    />
+    <pre className="my-6 p-5 rounded-2xl bg-ink text-canvas overflow-x-auto text-sm" {...props} />
   ),
   hr: (props) => <hr className="my-10 border-line" {...props} />,
   strong: (props) => <strong className="font-semibold text-ink" {...props} />,

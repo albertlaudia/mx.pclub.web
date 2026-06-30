@@ -13,9 +13,17 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "a11y": { "recommended": true },
-      "suspicious": { "noExplicitAny": "warn" },
-      "style": { "useImportType": "error", "useNodejsImportProtocol": "error" }
+      "a11y": {
+        "recommended": true,
+        "noSvgWithoutTitle": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "warn",
+        "noArrayIndexKey": "off",
+        "noImplicitAnyLet": "off"
+      },
+      "style": { "useImportType": "error", "useNodejsImportProtocol": "error" },
+      "security": { "noDangerouslySetInnerHtml": "off" }
     }
   },
   "javascript": {

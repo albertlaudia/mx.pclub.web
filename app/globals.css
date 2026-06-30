@@ -1,21 +1,21 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --font-sans: var(--font-inter);
   --font-mono: var(--font-mono);
 
   /* Brand color tokens — exposed as Tailwind utilities */
-  --color-coral: #FF6B5B;
-  --color-coral-hover: #E85A4A;
-  --color-ink: #1A1A1A;
-  --color-canvas: #FAFAF7;
-  --color-card: #FFFFFF;
-  --color-mute: #6B6B6B;
-  --color-line: #E5E5E0;
-  --color-accent-1perc: #F5A623;
-  --color-accent-heal: #7FB069;
-  --color-accent-riseup: #E07856;
-  --color-accent-resonate: #C46A4A;
+  --color-coral: #ff6b5b;
+  --color-coral-hover: #e85a4a;
+  --color-ink: #1a1a1a;
+  --color-canvas: #fafaf7;
+  --color-card: #ffffff;
+  --color-mute: #6b6b6b;
+  --color-line: #e5e5e0;
+  --color-accent-1perc: #f5a623;
+  --color-accent-heal: #7fb069;
+  --color-accent-riseup: #e07856;
+  --color-accent-resonate: #c46a4a;
 }
 
 :root {
@@ -49,7 +49,7 @@ html {
 body {
   background-color: rgb(var(--canvas-rgb));
   color: rgb(var(--ink-rgb));
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 ::selection {
@@ -61,7 +61,12 @@ body {
   outline-offset: 2px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: rgb(var(--ink-rgb));
   text-wrap: balance;
 }
@@ -91,11 +96,7 @@ p {
   }
 
   .gradient-bg-soft {
-    background: radial-gradient(
-        ellipse at top,
-        rgb(var(--coral-rgb) / 0.08),
-        transparent 50%
-      ),
+    background: radial-gradient(ellipse at top, rgb(var(--coral-rgb) / 0.08), transparent 50%),
       radial-gradient(ellipse at bottom right, #f59e0b20, transparent 50%);
   }
 
@@ -218,7 +219,9 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

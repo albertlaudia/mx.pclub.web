@@ -1,14 +1,13 @@
+import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
-import { cn } from '@/lib/utils'
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'link'
 type Size = 'sm' | 'md' | 'lg'
 
 const variants: Record<Variant, string> = {
   primary: 'bg-coral text-white hover:bg-coral-hover shadow-sm shadow-black/5',
-  secondary:
-    'border border-line bg-card text-ink hover:bg-canvas',
+  secondary: 'border border-line bg-card text-ink hover:bg-canvas',
   ghost: 'text-ink hover:bg-line/30',
   link: 'text-coral underline-offset-4 hover:underline',
 }
@@ -56,8 +55,14 @@ export function Button(props: ButtonProps) {
     )
   }
 
-  const { variant: _v, size: _s, as: _as, className: _c, children, ...rest } = props as CommonProps &
-    ButtonHTMLAttributes<HTMLButtonElement> & { as?: 'button' }
+  const {
+    variant: _v,
+    size: _s,
+    as: _as,
+    className: _c,
+    children,
+    ...rest
+  } = props as CommonProps & ButtonHTMLAttributes<HTMLButtonElement> & { as?: 'button' }
   return (
     <button className={className} {...rest}>
       {children}

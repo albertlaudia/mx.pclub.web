@@ -9,6 +9,8 @@
  * Never throws — email failures are best-effort and logged.
  */
 
+import { buildUnsubscribeUrl } from './tokens'
+
 export interface MagnetEmailOptions {
   to: string
   source: string
@@ -16,44 +18,54 @@ export interface MagnetEmailOptions {
   app?: string
 }
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "hello@positiveness.club"
-const APP_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://positiveness.club"
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? 'hello@positiveness.club'
+const APP_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://positiveness.club'
 
-const MAGNET_PRESETS: Record<string, { subject: string; headline: string; downloadLabel: string; ctaText: string; ctaHref: (app?: string) => string }> = {
-  "1perc-7day-pack": {
-    subject: "Your 7-day book summary pack is here",
-    headline: "7 books, 7 days, 5 minutes each.",
-    downloadLabel: "Read book 1 now",
-    ctaText: "Get the 1perc app",
-    ctaHref: (app) => `${APP_URL}/apps/${app ?? "1perc"}`,
+const MAGNET_PRESETS: Record<
+  string,
+  {
+    subject: string
+    headline: string
+    downloadLabel: string
+    ctaText: string
+    ctaHref: (app?: string) => string
+  }
+> = {
+  '1perc-7day-pack': {
+    subject: 'Your 7-day book summary pack is here',
+    headline: '7 books, 7 days, 5 minutes each.',
+    downloadLabel: 'Read book 1 now',
+    ctaText: 'Get the 1perc app',
+    ctaHref: (app) => `${APP_URL}/apps/${app ?? '1perc'}`,
   },
-  "heal-3min-reset": {
-    subject: "Your 3-minute calm reset (audio)",
-    headline: "Three minutes. One breath at a time.",
-    downloadLabel: "Listen to the 3-minute reset",
-    ctaText: "Get the HEAL app",
-    ctaHref: (app) => `${APP_URL}/apps/${app ?? "heal"}`,
+  'heal-3min-reset': {
+    subject: 'Your 3-minute calm reset (audio)',
+    headline: 'Three minutes. One breath at a time.',
+    downloadLabel: 'Listen to the 3-minute reset',
+    ctaText: 'Get the HEAL app',
+    ctaHref: (app) => `${APP_URL}/apps/${app ?? 'heal'}`,
   },
-  "riseup-7day-template": {
-    subject: "Your 7-day morning template",
-    headline: "One small win a day.",
+  'riseup-7day-template': {
+    subject: 'Your 7-day morning template',
+    headline: 'One small win a day.',
     downloadLabel: "See today's prompt",
-    ctaText: "Get the Riseup app",
-    ctaHref: (app) => `${APP_URL}/apps/${app ?? "riseup"}`,
+    ctaText: 'Get the Riseup app',
+    ctaHref: (app) => `${APP_URL}/apps/${app ?? 'riseup'}`,
   },
 }
 
 function renderEmail(opts: MagnetEmailOptions): { subject: string; html: string; text: string } {
   const preset = MAGNET_PRESETS[opts.magnet] ?? {
-    subject: "Your free pack is here",
-    headline: "We saved something for you.",
-    downloadLabel: "Open it now",
-    ctaText: "See the apps",
+    subject: 'Your free pack is here',
+    headline: 'We saved something for you.',
+    downloadLabel: 'Open it now',
+    ctaText: 'See the apps',
     ctaHref: () => APP_URL,
   }
 
   const subject = preset.subject
   const ctaHref = preset.ctaHref(opts.app)
+  const unsubUrl = buildUnsubscribeUrl(opts.to)
 
   const html = `<!doctype html>
 <html><body style="margin:0;padding:0;background:#FAF7F2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;color:#1a1a1a;">
@@ -81,7 +93,7 @@ function renderEmail(opts: MagnetEmailOptions): { subject: string; html: string;
     <hr style="margin:32px 0;border:none;border-top:1px solid #EAE6DF;" />
     <p style="margin:0;font-size:12px;color:#999;line-height:1.5;">
       You got this because you signed up at positiveness.club.
-      <a href="${APP_URL}/unsubscribe" style="color:#999;text-decoration:underline;">Unsubscribe</a>.
+      <a href="${unsubUrl}" style="color:#999;text-decoration:underline;">Unsubscribe</a>.
     </p>
   </div>
 </body></html>`
@@ -98,26 +110,28 @@ If you'd rather just install the app: ${preset.ctaText} → ${ctaHref}
 
 —
 You got this because you signed up at positiveness.club.
-Unsubscribe: ${APP_URL}/unsubscribe
+Unsubscribe: ${unsubUrl}
 `
 
   return { subject, html, text }
 }
 
-export async function sendMagnetEmail(opts: MagnetEmailOptions): Promise<{ sent: boolean; reason?: string }> {
+export async function sendMagnetEmail(
+  opts: MagnetEmailOptions,
+): Promise<{ sent: boolean; reason?: string }> {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) {
     console.log('[email] RESEND_API_KEY not set, skipping send to', opts.to)
-    return { sent: false, reason: "no_api_key" }
+    return { sent: false, reason: 'no_api_key' }
   }
 
   const { subject, html, text } = renderEmail(opts)
 
   try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
@@ -127,9 +141,9 @@ export async function sendMagnetEmail(opts: MagnetEmailOptions): Promise<{ sent:
         html,
         text,
         tags: [
-          { name: "magnet", value: opts.magnet },
-          { name: "source", value: opts.source },
-          ...(opts.app ? [{ name: "app", value: opts.app }] : []),
+          { name: 'magnet', value: opts.magnet },
+          { name: 'source', value: opts.source },
+          ...(opts.app ? [{ name: 'app', value: opts.app }] : []),
         ],
       }),
     })
@@ -141,10 +155,10 @@ export async function sendMagnetEmail(opts: MagnetEmailOptions): Promise<{ sent:
     }
 
     const json = (await res.json()) as { id?: string }
-    console.log(`[email] sent ${json.id ?? "(no id)"} to ${opts.to} (magnet=${opts.magnet})`)
+    console.log(`[email] sent ${json.id ?? '(no id)'} to ${opts.to} (magnet=${opts.magnet})`)
     return { sent: true }
   } catch (err) {
-    console.error("[email] send failed:", err)
-    return { sent: false, reason: "network" }
+    console.error('[email] send failed:', err)
+    return { sent: false, reason: 'network' }
   }
 }

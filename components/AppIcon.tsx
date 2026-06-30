@@ -1,5 +1,5 @@
-import type { SVGProps } from 'react'
 import { cn } from '@/lib/utils'
+import type { SVGProps } from 'react'
 
 /**
  * Hand-crafted app icons. Each is a unique, on-brand mark — not a stock glyph.
@@ -98,12 +98,7 @@ const ICONS = {
       <rect width="120" height="120" rx="26" fill="url(#bg-riseup)" />
       <circle cx="60" cy="62" r="20" fill="url(#sun-riseup)" />
       <rect x="0" y="74" width="120" height="20" fill="#7C2D12" opacity="0.4" />
-      <path
-        d="M0 74 L120 74"
-        stroke="white"
-        strokeWidth="1.5"
-        opacity="0.5"
-      />
+      <path d="M0 74 L120 74" stroke="white" strokeWidth="1.5" opacity="0.5" />
       <circle cx="86" cy="38" r="2" fill="white" opacity="0.8" />
       <circle cx="34" cy="42" r="1.5" fill="white" opacity="0.7" />
       <circle cx="92" cy="50" r="1" fill="white" opacity="0.6" />

@@ -13,7 +13,13 @@ interface RatingBadgeProps {
   className?: string
 }
 
-export function RatingBadge({ appName, rating, count, source = 'App Store', className }: RatingBadgeProps) {
+export function RatingBadge({
+  appName,
+  rating,
+  count,
+  source = 'App Store',
+  className,
+}: RatingBadgeProps) {
   return (
     <div className={`inline-flex items-center gap-2 text-sm text-mute ${className || ''}`}>
       <div className="flex items-center gap-0.5">

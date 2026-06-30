@@ -31,9 +31,9 @@ export const blogPosts: BlogPostMeta[] = [
     slug: '5-books-that-change-how-you-think-about-money',
     title: '5 books that will change how you think about money',
     metaDescription:
-      'Five books that reframe money — not as a number, but as a tool. From The Psychology of Money to Your Money or Your Life, here\'s what to read first.',
+      "Five books that reframe money — not as a number, but as a tool. From The Psychology of Money to Your Money or Your Life, here's what to read first.",
     excerpt:
-      "Money is a story we tell ourselves. These five books rewrite the story — and most are under 250 pages.",
+      'Money is a story we tell ourselves. These five books rewrite the story — and most are under 250 pages.',
     cover: '/blog/covers/money-books.png',
     author: 'Albert L.',
     authorRole: 'Founder, 1perc',
@@ -106,7 +106,7 @@ export const blogPosts: BlogPostMeta[] = [
     slug: 'privacy-first-apps-can-be-beautiful',
     title: 'Privacy-first apps can (and should) be beautiful',
     metaDescription:
-      "The myth that privacy-first means ugly or limited. How Resonate proves the opposite — and why every app should follow.",
+      'The myth that privacy-first means ugly or limited. How Resonate proves the opposite — and why every app should follow.',
     excerpt:
       "Privacy isn't a feature you bolt on. It's a design constraint that produces better apps.",
     cover: '/blog/covers/privacy-beautiful.png',

@@ -1,12 +1,13 @@
-import type { Metadata } from 'next'
 import { AppCard } from '@/components/AppCard'
 import { JsonLd } from '@/components/JsonLd'
 import { getApps } from '@/lib/data'
 import { SITE_URL } from '@/lib/seo'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Apps',
-  description: 'Every positiveness.club app — book summaries, calm audio, morning routines, and a privacy-first guitar tuner.',
+  description:
+    'Every positiveness.club app — book summaries, calm audio, morning routines, and a privacy-first guitar tuner.',
   alternates: { canonical: `${SITE_URL}/apps` },
 }
 

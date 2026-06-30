@@ -1,5 +1,5 @@
-import type { SVGProps } from 'react'
 import { cn } from '@/lib/utils'
+import type { SVGProps } from 'react'
 
 /**
  * The positiveness.club logo mark — a soft, warm wordmark.

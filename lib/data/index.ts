@@ -27,9 +27,28 @@
  * Public API surface stays stable when swapping sources.
  */
 
-import { isPbConfigured, pbList, PocketBaseError } from "@/lib/pb"
-import { apps as staticApps, getApp as staticGetApp, getOtherApps as staticGetOtherApps, getLiveApps as staticGetLiveApps, type PclubApp, type AppSlug, type AppFaqItem, type AppTestimonial } from "./apps"
-import { blogPosts as staticPosts, getPost as staticGetPost, getPublishedPosts as staticGetPublishedPosts, getPostsByTopic as staticGetPostsByTopic, getPostsByApp as staticGetPostsByApp, getRelatedPosts as staticGetRelatedPosts, topics as staticTopics, type BlogTopic, type BlogPostMeta } from "./blog"
+import { PocketBaseError, isPbConfigured, pbList } from '@/lib/pb'
+import {
+  type AppFaqItem,
+  type AppSlug,
+  type AppTestimonial,
+  type PclubApp,
+  apps as staticApps,
+  getApp as staticGetApp,
+  getLiveApps as staticGetLiveApps,
+  getOtherApps as staticGetOtherApps,
+} from './apps'
+import {
+  type BlogPostMeta,
+  type BlogTopic,
+  getPost as staticGetPost,
+  getPostsByApp as staticGetPostsByApp,
+  getPostsByTopic as staticGetPostsByTopic,
+  getPublishedPosts as staticGetPublishedPosts,
+  getRelatedPosts as staticGetRelatedPosts,
+  blogPosts as staticPosts,
+  topics as staticTopics,
+} from './blog'
 
 // Re-export types so consumers only import from this module
 export type { PclubApp, AppSlug, AppFaqItem, AppTestimonial }
@@ -59,7 +78,7 @@ interface PbApp {
   website_url?: string
   promo_video?: string
   og_image?: string
-  status: "active" | "beta" | "paused" | "hidden"
+  status: 'active' | 'beta' | 'paused' | 'hidden'
   sort_order?: number
 }
 
@@ -77,7 +96,7 @@ interface PbBlogPost {
   related_apps?: string[]
   reading_minutes?: number
   featured?: boolean
-  status: "draft" | "scheduled" | "published" | "archived"
+  status: 'draft' | 'scheduled' | 'published' | 'archived'
   published_at?: string
   og_image?: string
 }
@@ -108,11 +127,11 @@ interface PbAuthor {
 // Map PB rows → public domain models
 // ----------------------------------------------------------------------
 function mapPbApp(row: PbApp): PclubApp {
-  const accent = row.accent_color ?? "#F5A623"
+  const accent = row.accent_color ?? '#F5A623'
   // Map a hex color to a Tailwind bg-* class heuristically
   const accentBgClass = pickBgClass(accent)
-  const status: PclubApp["status"] = row.status === "active" ? "live" : "coming-soon"
-  const category = (row.category ?? "books") as PclubApp["category"]
+  const status: PclubApp['status'] = row.status === 'active' ? 'live' : 'coming-soon'
+  const category = (row.category ?? 'books') as PclubApp['category']
   return {
     slug: row.slug as AppSlug,
     name: row.name,
@@ -127,9 +146,9 @@ function mapPbApp(row: PbApp): PclubApp {
     category,
     categoryLabel: prettyCategory(category),
     keywords: row.keywords ?? [],
-    iosUrl: row.download_ios ?? "",
-    androidUrl: row.download_android ?? "",
-    appStoreId: "",
+    iosUrl: row.download_ios ?? '',
+    androidUrl: row.download_android ?? '',
+    appStoreId: '',
     bundleId: `com.pclub.${row.slug}`,
     leadMagnetSlug: null,
     ctaHeadline: row.tagline,
@@ -144,55 +163,65 @@ function mapPbApp(row: PbApp): PclubApp {
 }
 
 function mapPbPost(row: PbBlogPost): BlogPostMeta {
-  const topic = (row.topics?.[0] ?? "meta") as BlogTopic
+  const topic = (row.topics?.[0] ?? 'meta') as BlogTopic
   return {
     slug: row.slug,
     title: row.title,
     metaDescription: row.excerpt,
     excerpt: row.excerpt,
     cover: row.cover_image ?? `/blog/covers/${row.slug}.png`,
-    author: row.author ?? "Albert L.",
-    authorRole: "Founder, positiveness.club",
+    author: row.author ?? 'Albert L.',
+    authorRole: 'Founder, positiveness.club',
     topic,
     tags: row.keywords ?? [],
     relatedApp: row.related_apps?.[0] ?? null,
     readingTimeMin: row.reading_minutes ?? 5,
     publishedAt: (row.published_at ?? new Date().toISOString()).slice(0, 10),
-    status: row.status === "published" ? "published" : "draft",
+    status: row.status === 'published' ? 'published' : 'draft',
     keywords: row.keywords ?? [],
     featured: row.featured,
   }
 }
 
-function mapPbTopic(row: PbTopic): { slug: string; name: string; description: string; color: string } {
+function mapPbTopic(row: PbTopic): {
+  slug: string
+  name: string
+  description: string
+  color: string
+} {
   return {
     slug: row.slug,
     name: row.name,
-    description: row.description ?? "",
-    color: row.color ?? "#6B6B6B",
+    description: row.description ?? '',
+    color: row.color ?? '#6B6B6B',
   }
 }
 
 function prettyCategory(c: string): string {
   switch (c) {
-    case "books": return "Books · Learning"
-    case "wellness": return "Wellness · Calm"
-    case "habits": return "Habits · Routine"
-    case "music": return "Music · Tools"
-    default: return "App"
+    case 'books':
+      return 'Books · Learning'
+    case 'wellness':
+      return 'Wellness · Calm'
+    case 'habits':
+      return 'Habits · Routine'
+    case 'music':
+      return 'Music · Tools'
+    default:
+      return 'App'
   }
 }
 
 // Tailwind class picker — uses the existing static palette as a guide
 const ACCENT_BG_MAP: Record<string, string> = {
-  "#F5A623": "bg-amber-50 dark:bg-amber-950/30",
-  "#7FB069": "bg-green-50 dark:bg-green-950/30",
-  "#E07856": "bg-orange-50 dark:bg-orange-950/30",
-  "#C46A4A": "bg-rose-50 dark:bg-rose-950/30",
-  "#6B6B6B": "bg-zinc-50 dark:bg-zinc-950/30",
+  '#F5A623': 'bg-amber-50 dark:bg-amber-950/30',
+  '#7FB069': 'bg-green-50 dark:bg-green-950/30',
+  '#E07856': 'bg-orange-50 dark:bg-orange-950/30',
+  '#C46A4A': 'bg-rose-50 dark:bg-rose-950/30',
+  '#6B6B6B': 'bg-zinc-50 dark:bg-zinc-950/30',
 }
 function pickBgClass(hex: string): string {
-  return ACCENT_BG_MAP[hex.toUpperCase()] ?? "bg-zinc-50 dark:bg-zinc-950/30"
+  return ACCENT_BG_MAP[hex.toUpperCase()] ?? 'bg-zinc-50 dark:bg-zinc-950/30'
 }
 
 // ----------------------------------------------------------------------
@@ -207,8 +236,8 @@ async function fetchAppsFromPb(): Promise<PclubApp[]> {
   if (_pbAppsCache && now - _pbAppsCacheAt < CACHE_TTL_MS) {
     return _pbAppsCache
   }
-  const result = await pbList<PbApp>("pc_apps", {
-    sort: "sort_order,slug",
+  const result = await pbList<PbApp>('pc_apps', {
+    sort: 'sort_order,slug',
     perPage: 100,
     filter: "status != 'hidden'",
   })
@@ -226,8 +255,8 @@ async function fetchPostsFromPb(): Promise<BlogPostMeta[]> {
   if (_pbPostsCache && now - _pbPostsCacheAt < CACHE_TTL_MS) {
     return _pbPostsCache
   }
-  const result = await pbList<PbBlogPost>("pc_blog_posts", {
-    sort: "-published_at",
+  const result = await pbList<PbBlogPost>('pc_blog_posts', {
+    sort: '-published_at',
     perPage: 100,
     filter: "status = 'published'",
   })
@@ -240,19 +269,19 @@ async function fetchPostsFromPb(): Promise<BlogPostMeta[]> {
 let _pbTopicsCache: ReturnType<typeof mapPbTopic>[] | null = null
 async function fetchTopicsFromPb() {
   if (_pbTopicsCache) return _pbTopicsCache
-  const result = await pbList<PbTopic>("pc_topics", {
-    sort: "sort_order,slug",
+  const result = await pbList<PbTopic>('pc_topics', {
+    sort: 'sort_order,slug',
     perPage: 50,
   })
   _pbTopicsCache = result.items.map(mapPbTopic)
   return _pbTopicsCache
 }
 
-let _pbAuthorCache: Map<string, PbAuthor> = new Map()
+const _pbAuthorCache: Map<string, PbAuthor> = new Map()
 async function fetchAuthor(slug: string): Promise<PbAuthor | null> {
   if (_pbAuthorCache.has(slug)) return _pbAuthorCache.get(slug) ?? null
   try {
-    const result = await pbList<PbAuthor>("pc_authors", {
+    const result = await pbList<PbAuthor>('pc_authors', {
       filter: `slug = '${slug.replace(/'/g, "\\'")}'`,
       perPage: 1,
     })
@@ -271,9 +300,9 @@ async function shouldUsePb(): Promise<boolean> {
   if (!isPbConfigured()) return false
   try {
     // Probe the PB health endpoint cheaply.
-    const url = (process.env.NEXT_PUBLIC_PB_URL ?? process.env.PB_URL ?? "").replace(/\/$/, "")
+    const url = (process.env.NEXT_PUBLIC_PB_URL ?? process.env.PB_URL ?? '').replace(/\/$/, '')
     const res = await fetch(`${url}/api/health`, {
-      cache: "no-store",
+      cache: 'no-store',
       signal: AbortSignal.timeout(3000),
     })
     return res.ok
@@ -288,9 +317,12 @@ export async function getApps(): Promise<PclubApp[]> {
       return await fetchAppsFromPb()
     } catch (err) {
       if (err instanceof PocketBaseError) {
-        console.warn(`[data] PB getApps failed (${err.status}), falling back to static:`, err.message)
+        console.warn(
+          `[data] PB getApps failed (${err.status}), falling back to static:`,
+          err.message,
+        )
       } else {
-        console.warn(`[data] PB getApps failed, falling back to static:`, err)
+        console.warn('[data] PB getApps failed, falling back to static:', err)
       }
     }
   }
@@ -303,7 +335,7 @@ export async function getApp(slug: string): Promise<PclubApp | undefined> {
       const apps = await fetchAppsFromPb()
       return apps.find((a) => a.slug === slug)
     } catch (err) {
-      console.warn(`[data] PB getApp failed, falling back:`, err)
+      console.warn('[data] PB getApp failed, falling back:', err)
     }
   }
   return staticGetApp(slug)
@@ -313,9 +345,9 @@ export async function getLiveApps(): Promise<PclubApp[]> {
   if (await shouldUsePb()) {
     try {
       const apps = await fetchAppsFromPb()
-      return apps.filter((a) => a.status === "live")
+      return apps.filter((a) => a.status === 'live')
     } catch (err) {
-      console.warn(`[data] PB getLiveApps failed, falling back:`, err)
+      console.warn('[data] PB getLiveApps failed, falling back:', err)
     }
   }
   return staticGetLiveApps()
@@ -327,7 +359,7 @@ export async function getOtherApps(slug: string, n = 3): Promise<PclubApp[]> {
       const apps = await fetchAppsFromPb()
       return apps.filter((a) => a.slug !== slug).slice(0, n)
     } catch (err) {
-      console.warn(`[data] PB getOtherApps failed, falling back:`, err)
+      console.warn('[data] PB getOtherApps failed, falling back:', err)
     }
   }
   return staticGetOtherApps(slug, n)
@@ -341,7 +373,7 @@ export async function getPosts(): Promise<BlogPostMeta[]> {
     try {
       return await fetchPostsFromPb()
     } catch (err) {
-      console.warn(`[data] PB getPosts failed, falling back:`, err)
+      console.warn('[data] PB getPosts failed, falling back:', err)
     }
   }
   return staticGetPublishedPosts()
@@ -353,7 +385,7 @@ export async function getPost(slug: string): Promise<BlogPostMeta | undefined> {
       const posts = await fetchPostsFromPb()
       return posts.find((p) => p.slug === slug)
     } catch (err) {
-      console.warn(`[data] PB getPost failed, falling back:`, err)
+      console.warn('[data] PB getPost failed, falling back:', err)
     }
   }
   return staticGetPost(slug)
@@ -362,32 +394,34 @@ export async function getPost(slug: string): Promise<BlogPostMeta | undefined> {
 export async function getPostBody(slug: string): Promise<string | null> {
   if (await shouldUsePb()) {
     try {
-      const url = (process.env.NEXT_PUBLIC_PB_URL ?? process.env.PB_URL ?? "").replace(/\/$/, "")
-      const filter = encodeURIComponent(`slug = '${slug.replace(/'/g, "\\'")}' && status = 'published'`)
+      const url = (process.env.NEXT_PUBLIC_PB_URL ?? process.env.PB_URL ?? '').replace(/\/$/, '')
+      const filter = encodeURIComponent(
+        `slug = '${slug.replace(/'/g, "\\'")}' && status = 'published'`,
+      )
       const res = await fetch(
         `${url}/api/collections/pc_blog_posts/records?perPage=1&filter=${filter}&fields=body`,
-        { next: { revalidate: 60, tags: ["pb", "pc_blog_posts"] } }
+        { next: { revalidate: 60, tags: ['pb', 'pc_blog_posts'] } },
       )
       if (res.ok) {
         const json = (await res.json()) as { items: { body?: string }[] }
         return json.items[0]?.body ?? null
       }
     } catch (err) {
-      console.warn(`[data] PB getPostBody failed:`, err)
+      console.warn('[data] PB getPostBody failed:', err)
     }
   }
   // Fallback: read MDX file from /content/blog/
   try {
-    const { readFileSync } = await import("node:fs")
-    const { join } = await import("node:path")
-    const file = join(process.cwd(), "content", "blog", `${slug}.mdx`)
-    return readFileSync(file, "utf8")
+    const { readFileSync } = await import('node:fs')
+    const { join } = await import('node:path')
+    const file = join(process.cwd(), 'content', 'blog', `${slug}.mdx`)
+    return readFileSync(file, 'utf8')
   } catch {
     try {
-      const { readFileSync } = await import("node:fs")
-      const { join } = await import("node:path")
-      const file = join(process.cwd(), "content", "blog", `${slug}.md`)
-      return readFileSync(file, "utf8")
+      const { readFileSync } = await import('node:fs')
+      const { join } = await import('node:path')
+      const file = join(process.cwd(), 'content', 'blog', `${slug}.md`)
+      return readFileSync(file, 'utf8')
     } catch {
       return null
     }
@@ -400,7 +434,7 @@ export async function getPostsByTopic(topic: string): Promise<BlogPostMeta[]> {
       const posts = await fetchPostsFromPb()
       return posts.filter((p) => p.topic === topic)
     } catch (err) {
-      console.warn(`[data] PB getPostsByTopic failed, falling back:`, err)
+      console.warn('[data] PB getPostsByTopic failed, falling back:', err)
     }
   }
   return staticGetPostsByTopic(topic as BlogTopic)
@@ -412,7 +446,7 @@ export async function getPostsByApp(appSlug: string): Promise<BlogPostMeta[]> {
       const posts = await fetchPostsFromPb()
       return posts.filter((p) => p.relatedApp === appSlug)
     } catch (err) {
-      console.warn(`[data] PB getPostsByApp failed, falling back:`, err)
+      console.warn('[data] PB getPostsByApp failed, falling back:', err)
     }
   }
   return staticGetPostsByApp(appSlug)
@@ -429,7 +463,7 @@ export async function getRelatedPosts(slug: string, n = 3): Promise<BlogPostMeta
         .filter((p) => p.topic === post.topic || p.relatedApp === post.relatedApp)
         .slice(0, n)
     } catch (err) {
-      console.warn(`[data] PB getRelatedPosts failed, falling back:`, err)
+      console.warn('[data] PB getRelatedPosts failed, falling back:', err)
     }
   }
   return staticGetRelatedPosts(slug, n)
@@ -443,12 +477,14 @@ export async function getFeaturedPosts(n = 3): Promise<BlogPostMeta[]> {
 // ----------------------------------------------------------------------
 // Topics + authors
 // ----------------------------------------------------------------------
-export async function getTopics(): Promise<{ slug: string; name: string; description: string; color: string }[]> {
+export async function getTopics(): Promise<
+  { slug: string; name: string; description: string; color: string }[]
+> {
   if (await shouldUsePb()) {
     try {
       return await fetchTopicsFromPb()
     } catch (err) {
-      console.warn(`[data] PB getTopics failed, falling back:`, err)
+      console.warn('[data] PB getTopics failed, falling back:', err)
     }
   }
   return staticTopics
@@ -477,7 +513,12 @@ export async function getAuthor(slug: string): Promise<AuthorInfo | null> {
   }
   // Static fallback — synthesize from known authors
   const fallback: Record<string, AuthorInfo> = {
-    "albert-l": { slug: "albert-l", name: "Albert L.", role: "Founder, positiveness.club", bio: "Building the pclub ecosystem." },
+    'albert-l': {
+      slug: 'albert-l',
+      name: 'Albert L.',
+      role: 'Founder, positiveness.club',
+      bio: 'Building the pclub ecosystem.',
+    },
   }
   return fallback[slug] ?? null
 }
@@ -486,17 +527,24 @@ export async function getAuthors(): Promise<AuthorInfo[]> {
   const items: AuthorInfo[] = []
   if (await shouldUsePb()) {
     try {
-      const result = await pbList<PbAuthor>("pc_authors", { sort: "name", perPage: 100 })
+      const result = await pbList<PbAuthor>('pc_authors', { sort: 'name', perPage: 100 })
       for (const a of result.items) {
         _pbAuthorCache.set(a.slug, a)
         items.push({ slug: a.slug, name: a.name, role: a.role, bio: a.bio, avatar: a.avatar })
       }
       return items
     } catch (err) {
-      console.warn(`[data] PB getAuthors failed, falling back:`, err)
+      console.warn('[data] PB getAuthors failed, falling back:', err)
     }
   }
-  return [{ slug: "albert-l", name: "Albert L.", role: "Founder, positiveness.club", bio: "Building the pclub ecosystem." }]
+  return [
+    {
+      slug: 'albert-l',
+      name: 'Albert L.',
+      role: 'Founder, positiveness.club',
+      bio: 'Building the pclub ecosystem.',
+    },
+  ]
 }
 
 // Utility: clear cached PB responses (useful after writes)

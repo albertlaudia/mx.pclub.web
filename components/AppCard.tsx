@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
 import type { PclubApp } from '@/lib/data/apps'
 import { cn } from '@/lib/utils'
+import { ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
 import { AppIcon } from './AppIcon'
 
 interface AppCardProps {

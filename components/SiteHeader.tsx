@@ -27,7 +27,13 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button as="link" href="/apps" variant="ghost" size="sm" className="hidden sm:inline-flex">
+          <Button
+            as="link"
+            href="/apps"
+            variant="ghost"
+            size="sm"
+            className="hidden sm:inline-flex"
+          >
             Get the apps
           </Button>
           <Button as="link" href="/apps/1perc" variant="primary" size="sm">

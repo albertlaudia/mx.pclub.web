@@ -1,16 +1,14 @@
-import Link from 'next/link'
+import { getApp, getApps } from '@/lib/data'
 import { Mail, MessageCircle } from 'lucide-react'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getApps, getApp } from '@/lib/data'
 
 export async function generateStaticParams() {
   const apps = await getApps()
   return apps.map((a) => ({ slug: a.slug }))
 }
 
-export async function generateMetadata({
-  params,
-}: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const app = await getApp(slug)
   if (!app) return {}
@@ -20,16 +18,17 @@ export async function generateMetadata({
   }
 }
 
-export default async function AppSupportPage({
-  params,
-}: { params: Promise<{ slug: string }> }) {
+export default async function AppSupportPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const app = await getApp(slug)
   if (!app) notFound()
 
   return (
     <article className="container-narrow py-16 md:py-24">
-      <Link href={`/apps/${app.slug}`} className="text-sm text-mute hover:text-ink mb-6 inline-flex">
+      <Link
+        href={`/apps/${app.slug}`}
+        className="text-sm text-mute hover:text-ink mb-6 inline-flex"
+      >
         ← Back to {app.name}
       </Link>
       <h1 className="text-display-md font-bold tracking-tight mb-4">{app.name} — Support</h1>
@@ -38,10 +37,7 @@ export default async function AppSupportPage({
       </p>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <a
-          href="mailto:hello@positiveness.club"
-          className="card card-hover group"
-        >
+        <a href="mailto:hello@positiveness.club" className="card card-hover group">
           <Mail className="text-coral mb-3" size={24} />
           <h3 className="font-semibold mb-1">Email</h3>
           <p className="text-sm text-mute">hello@positiveness.club</p>
@@ -52,9 +48,7 @@ export default async function AppSupportPage({
           <MessageCircle className="text-coral mb-3" size={24} />
           <h3 className="font-semibold mb-1">Read the blog</h3>
           <p className="text-sm text-mute">Tips, tutorials, and deep dives.</p>
-          <p className="text-xs text-mute mt-2 group-hover:text-coral">
-            Browse posts →
-          </p>
+          <p className="text-xs text-mute mt-2 group-hover:text-coral">Browse posts →</p>
         </Link>
       </div>
 

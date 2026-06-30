@@ -68,7 +68,13 @@ export const apps: PclubApp[] = [
     accentBgClass: 'bg-amber-50 dark:bg-amber-950/30',
     category: 'books',
     categoryLabel: 'Books · Learning',
-    keywords: ['book summary', 'book insights', 'blinkist alternative', 'daily learning', '5 min read'],
+    keywords: [
+      'book summary',
+      'book insights',
+      'blinkist alternative',
+      'daily learning',
+      '5 min read',
+    ],
     iosUrl: 'https://apps.apple.com/app/id-coming-soon',
     androidUrl: 'https://play.google.com/store/apps/details?id=com.pclub.1perc',
     appStoreId: '',
@@ -89,11 +95,11 @@ export const apps: PclubApp[] = [
       },
       {
         q: 'How is this different from Blinkist?',
-        a: "1perc focuses on the 7 ideas that actually change how you think — not 20 bullet points to skim and forget. Plus, our insights come back to you throughout the week so the ideas stick.",
+        a: '1perc focuses on the 7 ideas that actually change how you think — not 20 bullet points to skim and forget. Plus, our insights come back to you throughout the week so the ideas stick.',
       },
       {
         q: 'Can I listen offline?',
-        a: "Yes. Download any summary to read or listen without a connection. Perfect for flights, subways, and the beach.",
+        a: 'Yes. Download any summary to read or listen without a connection. Perfect for flights, subways, and the beach.',
       },
       {
         q: 'Is there a free trial?',
@@ -102,7 +108,8 @@ export const apps: PclubApp[] = [
     ],
     testimonials: [
       {
-        quote: "I've read more books in 3 months than the last 3 years. The 5-minute format is the unlock.",
+        quote:
+          "I've read more books in 3 months than the last 3 years. The 5-minute format is the unlock.",
         author: 'Maya R.',
         source: 'App Store',
       },
@@ -144,19 +151,21 @@ export const apps: PclubApp[] = [
     description:
       'Audio therapy for anxiety, sleep, and overwhelm. Guided resets you can do anywhere — no app ritual, just press play.',
     longDescription:
-      "HEAL is a pocket therapist for the moments you need one. 3-minute audio resets for anxiety spikes, racing thoughts at 2am, pre-meeting jitters, and the long exhale after a hard day. Designed with clinical psychologists, voiced in calm human warmth.",
+      'HEAL is a pocket therapist for the moments you need one. 3-minute audio resets for anxiety spikes, racing thoughts at 2am, pre-meeting jitters, and the long exhale after a hard day. Designed with clinical psychologists, voiced in calm human warmth.',
     icon: '/apps/heal/icon.png',
     hero: '/apps/heal/hero.png',
-    screenshots: [
-      '/apps/heal/screen-1.png',
-      '/apps/heal/screen-2.png',
-      '/apps/heal/screen-3.png',
-    ],
+    screenshots: ['/apps/heal/screen-1.png', '/apps/heal/screen-2.png', '/apps/heal/screen-3.png'],
     accentColor: '#7FB069',
     accentBgClass: 'bg-green-50 dark:bg-green-950/30',
     category: 'wellness',
     categoryLabel: 'Wellness · Calm',
-    keywords: ['anxiety relief', 'meditation', 'sleep sounds', 'guided breathing', 'calm alternative'],
+    keywords: [
+      'anxiety relief',
+      'meditation',
+      'sleep sounds',
+      'guided breathing',
+      'calm alternative',
+    ],
     iosUrl: 'https://apps.apple.com/app/id-coming-soon',
     androidUrl: 'https://play.google.com/store/apps/details?id=com.pclub.heal',
     appStoreId: '',
@@ -227,7 +236,7 @@ export const apps: PclubApp[] = [
     description:
       'A morning ritual app that actually fits your life. 5 minutes, one tiny win, evidence-based — not another 47-step routine.',
     longDescription:
-      "Most morning routine apps are written by people who wake up at 4am and have a cold plunge. Riseup is for the rest of us. One tiny win before you check your phone. 5 minutes. No streak-shaming. No 17-step checklist. Just a small, evidence-based move toward being a little more yourself today.",
+      'Most morning routine apps are written by people who wake up at 4am and have a cold plunge. Riseup is for the rest of us. One tiny win before you check your phone. 5 minutes. No streak-shaming. No 17-step checklist. Just a small, evidence-based move toward being a little more yourself today.',
     icon: '/apps/riseup/icon.png',
     hero: '/apps/riseup/hero.png',
     screenshots: [
@@ -259,12 +268,12 @@ export const apps: PclubApp[] = [
         a: "Especially for you. Riseup doesn't require 4am wake-ups. Pick a time that works — even 11am counts as a 'morning' if that's your morning.",
       },
       {
-        q: "What if I miss a day?",
-        a: "Nothing happens. No streak broken, no red X, no guilt email. The app simply waits for you to come back.",
+        q: 'What if I miss a day?',
+        a: 'Nothing happens. No streak broken, no red X, no guilt email. The app simply waits for you to come back.',
       },
       {
-        q: "Is this another habit tracker?",
-        a: "No — habit trackers measure what you did. Riseup designs what to do. The science is in the prompt, not the log.",
+        q: 'Is this another habit tracker?',
+        a: 'No — habit trackers measure what you did. Riseup designs what to do. The science is in the prompt, not the log.',
       },
     ],
     testimonials: [],
@@ -346,7 +355,8 @@ export const apps: PclubApp[] = [
     ],
     testimonials: [
       {
-        quote: "By far the most beautiful tuner I've used. And the privacy thing is genuinely the point.",
+        quote:
+          "By far the most beautiful tuner I've used. And the privacy thing is genuinely the point.",
         author: 'Tom K.',
         source: 'App Store',
       },

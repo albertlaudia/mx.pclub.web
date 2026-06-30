@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import { Clock } from 'lucide-react'
 import type { BlogPostMeta } from '@/lib/data/blog'
 import { formatDate } from '@/lib/utils'
+import { Clock } from 'lucide-react'
+import Link from 'next/link'
 
 interface BlogCardProps {
   post: BlogPostMeta
@@ -10,10 +10,7 @@ interface BlogCardProps {
 
 export function BlogCard({ post, featured = false }: BlogCardProps) {
   return (
-    <Link
-      href={`/blog/${post.slug}`}
-      className={`group block ${featured ? 'md:col-span-2' : ''}`}
-    >
+    <Link href={`/blog/${post.slug}`} className={`group block ${featured ? 'md:col-span-2' : ''}`}>
       <article className="flex flex-col h-full rounded-2xl border border-line bg-card overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5 hover:border-coral/30">
         <div
           className={`relative overflow-hidden ${featured ? 'aspect-[2/1]' : 'aspect-[16/9]'}`}
