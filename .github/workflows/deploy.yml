@@ -32,20 +32,36 @@ jobs:
     steps:
       - name: Resolve trigger source
         id: trigger
+        env:
+          GH_EVENT: ${{ github.event_name }}
+          GH_SHA: ${{ github.sha }}
+          GH_MESSAGE: ${{ github.event.head_commit.message }}
+          GH_REASON: ${{ inputs.reason }}
         run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            echo "source=push" >> "$GITHUB_OUTPUT"
-            echo "commit=${{ github.sha }}" >> "$GITHUB_OUTPUT"
-            echo "message=${{ github.event.head_commit.message }}" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event_name }}" = "schedule" ]; then
-            echo "source=schedule" >> "$GITHUB_OUTPUT"
-            echo "commit=${{ github.sha }}" >> "$GITHUB_OUTPUT"
-            echo "message=Periodic resync (every 6h)" >> "$GITHUB_OUTPUT"
-          else
-            echo "source=manual" >> "$GITHUB_OUTPUT"
-            echo "commit=${{ github.sha }}" >> "$GITHUB_OUTPUT"
-            echo "message=${{ inputs.reason }}" >> "$GITHUB_OUTPUT"
-          fi
+          # Use heredoc / printf to safely handle multi-line commit messages
+          {
+            echo "source<<EOF"
+            if [ "$GH_EVENT" = "push" ]; then
+              echo "push"
+            elif [ "$GH_EVENT" = "schedule" ]; then
+              echo "schedule"
+            else
+              echo "manual"
+            fi
+            echo "EOF"
+            echo "commit<<EOF"
+            echo "$GH_SHA"
+            echo "EOF"
+            echo "message<<EOF"
+            if [ "$GH_EVENT" = "push" ]; then
+              echo "$GH_MESSAGE" | head -1
+            elif [ "$GH_EVENT" = "schedule" ]; then
+              echo "Periodic resync (every 6h)"
+            else
+              echo "${GH_REASON:-manual trigger}"
+            fi
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Trigger Dokploy redeploy via API
         env:
