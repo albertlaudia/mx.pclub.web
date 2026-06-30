@@ -17,10 +17,7 @@ export default function Loading() {
         {/* Skeleton grid */}
         <div className="grid gap-4 md:grid-cols-2 mt-12">
           {[0, 1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="h-40 bg-zinc-100 dark:bg-zinc-900 rounded-2xl animate-pulse"
-            />
+            <div key={i} className="h-40 bg-zinc-100 dark:bg-zinc-900 rounded-2xl animate-pulse" />
           ))}
         </div>
       </div>

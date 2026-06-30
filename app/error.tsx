@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect } from 'react'
-import Link from 'next/link'
-import { AlertCircle, RotateCw } from 'lucide-react'
 import { Button } from '@/components/Button'
+import { AlertCircle, RotateCw } from 'lucide-react'
+import Link from 'next/link'
+import { useEffect } from 'react'
 
 /**
  * Top-level error boundary.
@@ -40,9 +40,7 @@ export default function ErrorBoundary({
         <p className="text-mute leading-relaxed mb-2">
           We hit an unexpected error rendering this page. It has been logged.
         </p>
-        {error.digest && (
-          <p className="text-xs text-mute font-mono mb-6">ref: {error.digest}</p>
-        )}
+        {error.digest && <p className="text-xs text-mute font-mono mb-6">ref: {error.digest}</p>}
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button variant="primary" onClick={reset}>
             <RotateCw size={16} />

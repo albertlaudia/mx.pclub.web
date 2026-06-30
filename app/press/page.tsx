@@ -124,9 +124,9 @@ export default async function PressPage() {
         <h2 className="text-2xl font-bold mb-6">Founder bio</h2>
         <div className="card space-y-4 leading-relaxed text-mute">
           <p>
-            <strong className="text-ink">Albert Laudia</strong> is the founder of
-            positiveness.club. He has been building software professionally since 2015, including
-            founding and selling a SaaS company in the productivity space in 2022.
+            <strong className="text-ink">Albert Laudia</strong> is the founder of positiveness.club.
+            He has been building software professionally since 2015, including founding and selling
+            a SaaS company in the productivity space in 2022.
           </p>
           <p>
             Before positiveness, he led mobile engineering at a Series B healthtech company in

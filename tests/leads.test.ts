@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest"
-import { z } from "zod"
+import { describe, expect, it } from 'vitest'
+import { z } from 'zod'
 
 // Mirror of the schema in app/api/leads/route.ts. Re-defined here for test isolation.
 const LeadSchema = z.object({
@@ -15,43 +15,43 @@ const LeadSchema = z.object({
   utm_campaign: z.string().max(80).optional(),
 })
 
-describe("/api/leads — input validation", () => {
-  it("accepts a complete payload", () => {
+describe('/api/leads — input validation', () => {
+  it('accepts a complete payload', () => {
     const r = LeadSchema.safeParse({
-      email: "test@example.com",
-      source: "homepage-hero",
-      app: "1perc",
-      magnet: "1perc-7day-pack",
-      utm_source: "twitter",
+      email: 'test@example.com',
+      source: 'homepage-hero',
+      app: '1perc',
+      magnet: '1perc-7day-pack',
+      utm_source: 'twitter',
     })
     expect(r.success).toBe(true)
   })
 
-  it("rejects an invalid email", () => {
+  it('rejects an invalid email', () => {
     const r = LeadSchema.safeParse({
-      email: "not-an-email",
-      source: "homepage",
+      email: 'not-an-email',
+      source: 'homepage',
     })
     expect(r.success).toBe(false)
   })
 
-  it("rejects a missing source", () => {
-    const r = LeadSchema.safeParse({ email: "test@example.com" })
+  it('rejects a missing source', () => {
+    const r = LeadSchema.safeParse({ email: 'test@example.com' })
     expect(r.success).toBe(false)
   })
 
-  it("rejects a too-long source", () => {
+  it('rejects a too-long source', () => {
     const r = LeadSchema.safeParse({
-      email: "test@example.com",
-      source: "x".repeat(100),
+      email: 'test@example.com',
+      source: 'x'.repeat(100),
     })
     expect(r.success).toBe(false)
   })
 
-  it("accepts minimal payload (just email + source)", () => {
+  it('accepts minimal payload (just email + source)', () => {
     const r = LeadSchema.safeParse({
-      email: "test@example.com",
-      source: "x",
+      email: 'test@example.com',
+      source: 'x',
     })
     expect(r.success).toBe(true)
   })
