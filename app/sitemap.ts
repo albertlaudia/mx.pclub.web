@@ -44,5 +44,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...appRoutes, ...blogRoutes]
+  // Per-app legal pages (currently only HEAL has dedicated legal docs).
+  // These are the URLs that the App Store / Play Store metadata point to.
+  const appLegalRoutes: MetadataRoute.Sitemap = apps
+    .filter((app) => app.slug === 'heal')
+    .flatMap((app) => [
+      {
+        url: `${SITE_URL}/heal/tnc`,
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.4,
+      },
+      {
+        url: `${SITE_URL}/heal/policies`,
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.4,
+      },
+    ])
+
+  return [...staticRoutes, ...appRoutes, ...blogRoutes, ...appLegalRoutes]
 }

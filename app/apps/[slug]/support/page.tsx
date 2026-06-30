@@ -1,5 +1,5 @@
 import { getApp, getApps } from '@/lib/data'
-import { Mail, MessageCircle } from 'lucide-react'
+import { Mail, MessageCircle, FileText } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -22,6 +22,9 @@ export default async function AppSupportPage({ params }: { params: Promise<{ slu
   const { slug } = await params
   const app = await getApp(slug)
   if (!app) notFound()
+
+  // Per-app support pages: HEAL has dedicated legal pages accessible from here.
+  const hasDedicatedLegal = app.slug === 'heal'
 
   return (
     <article className="container-narrow py-16 md:py-24">
@@ -52,6 +55,26 @@ export default async function AppSupportPage({ params }: { params: Promise<{ slu
         </Link>
       </div>
 
+      {hasDedicatedLegal && (
+        <div className="mt-8">
+          <h2 className="font-semibold mb-3">Legal & policies</h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Link href="/heal/tnc" className="card card-hover group">
+              <FileText className="text-coral mb-3" size={24} />
+              <h3 className="font-semibold mb-1">Terms & Conditions</h3>
+              <p className="text-sm text-mute">Subscription terms, medical disclaimer, arbitration.</p>
+              <p className="text-xs text-mute mt-2 group-hover:text-coral">Read /heal/tnc →</p>
+            </Link>
+            <Link href="/heal/policies" className="card card-hover group">
+              <FileText className="text-coral mb-3" size={24} />
+              <h3 className="font-semibold mb-1">Privacy Policy</h3>
+              <p className="text-sm text-mute">Local-first, no analytics, no tracking.</p>
+              <p className="text-xs text-mute mt-2 group-hover:text-coral">Read /heal/policies →</p>
+            </Link>
+          </div>
+        </div>
+      )}
+
       <div className="mt-16 p-6 rounded-2xl border border-line bg-card">
         <h2 className="font-semibold mb-3">Common questions</h2>
         <div className="space-y-4 text-sm text-mute">
@@ -66,3 +89,4 @@ export default async function AppSupportPage({ params }: { params: Promise<{ slu
     </article>
   )
 }
+

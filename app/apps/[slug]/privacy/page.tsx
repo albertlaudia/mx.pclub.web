@@ -22,6 +22,11 @@ export default async function AppPrivacyPage({ params }: { params: Promise<{ slu
   const app = await getApp(slug)
   if (!app) notFound()
 
+  // Per-app privacy pages: HEAL is the only app with a dedicated legal package.
+  // For HEAL, link to the canonical /heal/policies and /heal/tnc routes that the
+  // App Store / Play Store metadata point to.
+  const hasDedicatedLegal = app.slug === 'heal'
+
   return (
     <article className="container-narrow py-16 md:py-24">
       <Link
@@ -34,6 +39,30 @@ export default async function AppPrivacyPage({ params }: { params: Promise<{ slu
       <p className="text-mute text-lg mb-12">
         How {app.name} handles your data. Short version: as little as possible.
       </p>
+
+      {hasDedicatedLegal && (
+        <div className="card border-coral/40 bg-coral/5 mb-12">
+          <p className="text-base font-semibold mb-3 text-coral">Full legal documents</p>
+          <p className="text-mute text-sm mb-4">
+            The following pages are the legally binding documents referenced in {app.name}&rsquo;s
+            app-store metadata and inside the app itself.
+          </p>
+          <ul className="space-y-2 text-sm">
+            <li>
+              <Link href="/heal/policies" className="text-coral underline font-medium">
+                HEAL — Privacy Policy
+              </Link>{' '}
+              <span className="text-mute">(local-first, no analytics, no tracking)</span>
+            </li>
+            <li>
+              <Link href="/heal/tnc" className="text-coral underline font-medium">
+                HEAL — Terms and Conditions
+              </Link>{' '}
+              <span className="text-mute">(subscription, medical disclaimer, arbitration)</span>
+            </li>
+          </ul>
+        </div>
+      )}
 
       <div className="prose max-w-none text-mute leading-relaxed space-y-6">
         <p>
@@ -69,3 +98,4 @@ export default async function AppPrivacyPage({ params }: { params: Promise<{ slu
     </article>
   )
 }
+

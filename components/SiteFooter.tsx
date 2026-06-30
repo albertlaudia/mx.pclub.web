@@ -70,6 +70,22 @@ export async function SiteFooter() {
                   Terms
                 </Link>
               </li>
+              <li className="pt-2 mt-2 border-t border-line/60">
+                <Link
+                  href="/heal/policies"
+                  className="text-mute hover:text-coral transition-colors text-xs font-medium"
+                >
+                  HEAL — Privacy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/heal/tnc"
+                  className="text-mute hover:text-coral transition-colors text-xs font-medium"
+                >
+                  HEAL — Terms
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

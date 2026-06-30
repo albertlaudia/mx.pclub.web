@@ -80,7 +80,7 @@ const REDIRECTS: Array<[string, string, string, string]> = [
     '1perc-ios',
     'https://apps.apple.com/app/id-coming-soon',
     '1perc',
-    '1perc iOS App Store — placeholder until approved',
+    '1perc iOS App Store - placeholder until approved',
   ],
   [
     '1perc-android',
@@ -88,25 +88,25 @@ const REDIRECTS: Array<[string, string, string, string]> = [
     '1perc',
     '1perc Play Store',
   ],
-  ['heal-ios', 'https://apps.apple.com/app/id-coming-soon', 'heal', 'HEAL iOS — placeholder'],
+  ['heal-ios', 'https://apps.apple.com/app/id-coming-soon', 'heal', 'HEAL iOS - placeholder'],
   [
     'heal-android',
     'https://play.google.com/store/apps/details?id=com.pclub.heal',
     'heal',
-    'HEAL Play Store — placeholder',
+    'HEAL Play Store - placeholder',
   ],
-  ['riseup-ios', 'https://apps.apple.com/app/id-coming-soon', 'riseup', 'Riseup iOS — placeholder'],
+  ['riseup-ios', 'https://apps.apple.com/app/id-coming-soon', 'riseup', 'Riseup iOS - placeholder'],
   [
     'riseup-android',
     'https://play.google.com/store/apps/details?id=com.pclub.riseup',
     'riseup',
-    'Riseup Play Store — placeholder',
+    'Riseup Play Store - placeholder',
   ],
   [
     'resonate-ios',
     'https://apps.apple.com/app/id-coming-soon',
     'resonate',
-    'Resonate iOS — placeholder',
+    'Resonate iOS - placeholder',
   ],
   [
     'resonate-android',
@@ -132,14 +132,25 @@ const REDIRECTS: Array<[string, string, string, string]> = [
   ['privacy', `${SITE_URL}/privacy`, '', 'Platform privacy policy'],
   ['press', `${SITE_URL}/press`, '', 'Press kit'],
   ['contact', 'mailto:hello@positiveness.club', '', 'Contact email'],
-]
+
+  // Legal pages — shortcuts for App Store / Play Store metadata, QR codes,
+  // and in-app "Open Legal" buttons. These URLs are stable even if we
+  // later restructure the site.
+  ['heal-tnc', `${SITE_URL}/heal/tnc`, 'heal', 'HEAL — Terms and Conditions'],
+  ['heal-policies', `${SITE_URL}/heal/policies`, 'heal', 'HEAL — Privacy Policy'],
+  ['heal-privacy', `${SITE_URL}/heal/policies`, 'heal', 'Alias for heal-policies'],
+  ['heal-terms', `${SITE_URL}/heal/tnc`, 'heal', 'Alias for heal-tnc'],
+  // Regional variants for app stores that don't accept direct URLs with paths.
+  ['legal-privacy', `${SITE_URL}/heal/policies`, '', 'Generic Privacy Policy'],
+  ['legal-terms', `${SITE_URL}/heal/tnc`, '', 'Generic Terms'],
+]  
 
 async function main() {
-  console.log('→ Seeding redirects…')
+  console.log('→ Seeding redirects...')
   for (const [code, target, app, desc] of REDIRECTS) {
     try {
       const action = await upsert(code, target, app, desc)
-      console.log(`  ${action === 'created' ? '+' : '~'} ${code} → ${target.slice(0, 50)}…`)
+      console.log(`  ${action === 'created' ? '+' : '~'} ${code} → ${target.slice(0, 50)}...`)
     } catch (err) {
       console.error(`  ✗ ${code}: ${(err as Error).message}`)
     }
