@@ -22,10 +22,12 @@ export default async function AppPrivacyPage({ params }: { params: Promise<{ slu
   const app = await getApp(slug)
   if (!app) notFound()
 
-  // Per-app privacy pages: HEAL is the only app with a dedicated legal package.
-  // For HEAL, link to the canonical /heal/policies and /heal/tnc routes that the
-  // App Store / Play Store metadata point to.
-  const hasDedicatedLegal = app.slug === 'heal'
+  // Per-app privacy pages: HEAL and 1perc each have a dedicated legal package.
+  // For those, link to the canonical /<slug>/policies and /<slug>/tnc routes that
+  // the App Store / Play Store metadata point to.
+  const legalSlug = app.slug === 'heal' ? 'heal' : app.slug === '1perc' ? '1perc' : null
+  const hasDedicatedLegal = legalSlug !== null
+  const legalLabel = app.slug === 'heal' ? 'HEAL' : app.name
 
   return (
     <article className="container-narrow py-16 md:py-24">
@@ -40,7 +42,7 @@ export default async function AppPrivacyPage({ params }: { params: Promise<{ slu
         How {app.name} handles your data. Short version: as little as possible.
       </p>
 
-      {hasDedicatedLegal && (
+      {hasDedicatedLegal && legalSlug && (
         <div className="card border-coral/40 bg-coral/5 mb-12">
           <p className="text-base font-semibold mb-3 text-coral">Full legal documents</p>
           <p className="text-mute text-sm mb-4">
@@ -49,16 +51,28 @@ export default async function AppPrivacyPage({ params }: { params: Promise<{ slu
           </p>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="/heal/policies" className="text-coral underline font-medium">
-                HEAL — Privacy Policy
+              <Link href={`/${legalSlug}/policies`} className="text-coral underline font-medium">
+                {legalLabel} — Privacy Policy
               </Link>{' '}
-              <span className="text-mute">(local-first, no analytics, no tracking)</span>
+              <span className="text-mute">
+                (
+                {app.slug === 'heal'
+                  ? 'local-first, no analytics, no tracking'
+                  : 'local-first, no analytics, IP/copyright handling'}
+                )
+              </span>
             </li>
             <li>
-              <Link href="/heal/tnc" className="text-coral underline font-medium">
-                HEAL — Terms and Conditions
+              <Link href={`/${legalSlug}/tnc`} className="text-coral underline font-medium">
+                {legalLabel} — Terms and Conditions
               </Link>{' '}
-              <span className="text-mute">(subscription, medical disclaimer, arbitration)</span>
+              <span className="text-mute">
+                (
+                {app.slug === 'heal'
+                  ? 'subscription, medical disclaimer, arbitration'
+                  : 'subscription, fair-use, voice talent, arbitration'}
+                )
+              </span>
             </li>
           </ul>
         </div>

@@ -23,8 +23,10 @@ export default async function AppSupportPage({ params }: { params: Promise<{ slu
   const app = await getApp(slug)
   if (!app) notFound()
 
-  // Per-app support pages: HEAL has dedicated legal pages accessible from here.
-  const hasDedicatedLegal = app.slug === 'heal'
+  // Per-app support pages: HEAL and 1perc each have dedicated legal pages.
+  const legalSlug = app.slug === 'heal' ? 'heal' : app.slug === '1perc' ? '1perc' : null
+  const hasDedicatedLegal = legalSlug !== null
+  const legalLabel = app.slug === 'heal' ? 'HEAL' : app.name
 
   return (
     <article className="container-narrow py-16 md:py-24">
@@ -55,23 +57,33 @@ export default async function AppSupportPage({ params }: { params: Promise<{ slu
         </Link>
       </div>
 
-      {hasDedicatedLegal && (
+      {hasDedicatedLegal && legalSlug && (
         <div className="mt-8">
           <h2 className="font-semibold mb-3">Legal & policies</h2>
           <div className="grid gap-4 md:grid-cols-2">
-            <Link href="/heal/tnc" className="card card-hover group">
+            <Link href={`/${legalSlug}/tnc`} className="card card-hover group">
               <FileText className="text-coral mb-3" size={24} />
               <h3 className="font-semibold mb-1">Terms & Conditions</h3>
               <p className="text-sm text-mute">
-                Subscription terms, medical disclaimer, arbitration.
+                {app.slug === 'heal'
+                  ? 'Subscription terms, medical disclaimer, arbitration.'
+                  : 'Subscription terms, fair-use / copyright position, voice-talent notices, arbitration.'}
               </p>
-              <p className="text-xs text-mute mt-2 group-hover:text-coral">Read /heal/tnc →</p>
+              <p className="text-xs text-mute mt-2 group-hover:text-coral">
+                Read /{legalSlug}/tnc →
+              </p>
             </Link>
-            <Link href="/heal/policies" className="card card-hover group">
+            <Link href={`/${legalSlug}/policies`} className="card card-hover group">
               <FileText className="text-coral mb-3" size={24} />
               <h3 className="font-semibold mb-1">Privacy Policy</h3>
-              <p className="text-sm text-mute">Local-first, no analytics, no tracking.</p>
-              <p className="text-xs text-mute mt-2 group-hover:text-coral">Read /heal/policies →</p>
+              <p className="text-sm text-mute">
+                {app.slug === 'heal'
+                  ? 'Local-first, no analytics, no tracking.'
+                  : 'Local-first, no analytics, reading-progress data handled on-device.'}
+              </p>
+              <p className="text-xs text-mute mt-2 group-hover:text-coral">
+                Read /{legalSlug}/policies →
+              </p>
             </Link>
           </div>
         </div>

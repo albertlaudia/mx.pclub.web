@@ -86,6 +86,22 @@ export async function SiteFooter() {
                   HEAL — Terms
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/1perc/policies"
+                  className="text-mute hover:text-coral transition-colors text-xs font-medium"
+                >
+                  1perc — Privacy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/1perc/tnc"
+                  className="text-mute hover:text-coral transition-colors text-xs font-medium"
+                >
+                  1perc — Terms
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

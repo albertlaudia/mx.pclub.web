@@ -143,6 +143,12 @@ const REDIRECTS: Array<[string, string, string, string]> = [
   // Regional variants for app stores that don't accept direct URLs with paths.
   ['legal-privacy', `${SITE_URL}/heal/policies`, '', 'Generic Privacy Policy'],
   ['legal-terms', `${SITE_URL}/heal/tnc`, '', 'Generic Terms'],
+
+  // 1perc — Book Summary App legal shortcuts
+  ['1perc-tnc', `${SITE_URL}/1perc/tnc`, '1perc', '1perc — Terms and Conditions'],
+  ['1perc-policies', `${SITE_URL}/1perc/policies`, '1perc', '1perc — Privacy Policy'],
+  ['1perc-privacy', `${SITE_URL}/1perc/policies`, '1perc', 'Alias for 1perc-policies'],
+  ['1perc-terms', `${SITE_URL}/1perc/tnc`, '1perc', 'Alias for 1perc-tnc'],
 ]
 
 async function main() {
