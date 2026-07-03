@@ -1,0 +1,43 @@
+<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FB7185" />
+      <stop offset="55%" stop-color="#F43F5E" />
+      <stop offset="100%" stop-color="#BE123C" />
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#FEF3C7" />
+      <stop offset="70%" stop-color="#FED7AA" />
+      <stop offset="100%" stop-color="#FB923C" />
+    </radialGradient>
+    <linearGradient id="peak-front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E1B4B" />
+      <stop offset="100%" stop-color="#312E81" />
+    </linearGradient>
+    <linearGradient id="peak-back" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4338CA" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="226" fill="url(#bg)" />
+  <!-- Sun rays -->
+  <g stroke="#FEF3C7" stroke-width="21" stroke-linecap="round" opacity="0.55">
+    <line x1="512" y1="120" x2="512" y2="188" />
+    <line x1="308" y1="188" x2="342" y2="240" />
+    <line x1="716" y1="188" x2="682" y2="240" />
+  </g>
+  <!-- Sun -->
+  <circle cx="512" cy="530" r="154" fill="url(#sun)" />
+  <circle cx="512" cy="530" r="188" fill="#FED7AA" opacity="0.3" />
+  <!-- Back peak (left, smaller, behind) -->
+  <path d="M0 1024 L290 598 L512 820 L512 1024 Z" fill="url(#peak-back)" opacity="0.7" />
+  <!-- Front peak (right, dominant) -->
+  <path d="M240 1024 L614 426 L1024 1024 Z" fill="url(#peak-front)" />
+  <!-- Snowcap -->
+  <path d="M546 512 L614 426 L682 512 L658 530 L614 478 L570 530 Z" fill="#FFFFFF" opacity="0.85" />
+  <!-- Ascending arrow at top -->
+  <g stroke="#FFFFFF" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" opacity="0.92">
+    <line x1="512" y1="306" x2="512" y2="358" />
+    <polyline points="478,332 512,290 546,332" fill="none" />
+  </g>
+</svg>

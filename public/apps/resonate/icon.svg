@@ -1,0 +1,40 @@
+<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="60%" stop-color="#7C3AED" />
+      <stop offset="100%" stop-color="#A21CAF" />
+    </linearGradient>
+    <radialGradient id="core" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#C7D2FE" />
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="226" fill="url(#bg)" />
+  <!-- Stars -->
+  <circle cx="188" cy="188" r="10" fill="#FFFFFF" opacity="0.55" />
+  <circle cx="836" cy="240" r="8" fill="#FFFFFF" opacity="0.45" />
+  <circle cx="154" cy="786" r="9" fill="#FFFFFF" opacity="0.45" />
+  <circle cx="854" cy="854" r="12" fill="#FFFFFF" opacity="0.55" />
+  <circle cx="840" cy="160" r="5" fill="#FFFFFF" opacity="0.4" />
+  <circle cx="180" cy="500" r="6" fill="#FFFFFF" opacity="0.4" />
+  <!-- Concentric resonance rings -->
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round">
+    <circle cx="512" cy="512" r="358" stroke-width="10" opacity="0.18" />
+    <circle cx="512" cy="512" r="273" stroke-width="15" opacity="0.32" />
+    <circle cx="512" cy="512" r="188" stroke-width="19" opacity="0.55" />
+    <circle cx="512" cy="512" r="111" stroke-width="22" opacity="0.85" />
+  </g>
+  <!-- Sound bars crossing rings -->
+  <g stroke="#FFFFFF" stroke-linecap="round" opacity="0.92">
+    <line x1="308" y1="426" x2="308" y2="598" stroke-width="26" />
+    <line x1="410" y1="358" x2="410" y2="666" stroke-width="26" />
+    <line x1="512" y1="290" x2="512" y2="734" stroke-width="31" />
+    <line x1="614" y1="358" x2="614" y2="666" stroke-width="26" />
+    <line x1="716" y1="426" x2="716" y2="598" stroke-width="26" />
+  </g>
+  <!-- Core node -->
+  <circle cx="512" cy="512" r="60" fill="url(#core)" />
+  <!-- Highlight glint -->
+  <circle cx="494" cy="494" r="17" fill="#FFFFFF" opacity="0.95" />
+</svg>

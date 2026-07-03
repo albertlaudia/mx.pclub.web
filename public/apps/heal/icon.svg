@@ -1,0 +1,23 @@
+<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0F766E" />
+      <stop offset="60%" stop-color="#14B8A6" />
+      <stop offset="100%" stop-color="#5EEAD4" />
+    </linearGradient>
+    <radialGradient id="breath" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.6" />
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="226" fill="url(#bg)" />
+  <path d="M0 820 Q256 770 512 820 T1024 820 L1024 1024 L0 1024 Z" fill="#FFFFFF" opacity="0.08" />
+  <!-- Outermost ripple -->
+  <path d="M512 854 C512 854, 154 650, 154 426 C154 274, 256 188, 358 188 C428 188, 478 222, 512 274 C546 222, 596 188, 666 188 C768 188, 870 274, 870 426 C870 650, 512 854, 512 854 Z" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" />
+  <!-- Middle ripple -->
+  <path d="M512 786 C512 786, 240 616, 240 444 C240 326, 326 256, 410 256 C460 256, 496 282, 512 326 C528 282, 564 256, 614 256 C698 256, 784 326, 784 444 C784 616, 512 786, 512 786 Z" fill="none" stroke="#FFFFFF" stroke-width="19" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" />
+  <!-- Inner solid heart (the breath) -->
+  <path d="M512 718 C512 718, 326 580, 326 462 C326 376, 394 326, 462 326 C488 326, 504 332, 512 358 C520 332, 536 326, 562 326 C630 326, 698 376, 698 462 C698 580, 512 718, 512 718 Z" fill="url(#breath)" />
+  <!-- Center dot -->
+  <circle cx="512" cy="478" r="17" fill="#0F766E" opacity="0.4" />
+</svg>
