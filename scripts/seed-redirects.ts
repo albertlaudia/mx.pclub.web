@@ -142,6 +142,7 @@ const REDIRECTS: Array<[string, string, string, string]> = [
   ['heal-tnc', `${SITE_URL}/heal/terms`, 'heal', 'HEAL — Terms and Conditions (canonical)'],
   ['heal-policies', `${SITE_URL}/heal/policy`, 'heal', 'HEAL — Privacy Policy (canonical)'],
   ['heal-privacy', `${SITE_URL}/heal/policy`, 'heal', 'HEAL — Privacy Policy (alias)'],
+  ['heal-policy', `${SITE_URL}/heal/policy`, 'heal', 'HEAL — Privacy Policy (alias)'],
   ['heal-terms', `${SITE_URL}/heal/terms`, 'heal', 'HEAL — Terms (alias)'],
   // Legacy URLs (already published in some metadata) — keep these as additional
   // shortcuts so old links still work.
@@ -160,6 +161,7 @@ const REDIRECTS: Array<[string, string, string, string]> = [
   ['1perc-tnc', `${SITE_URL}/1perc/terms`, '1perc', '1perc — Terms and Conditions (canonical)'],
   ['1perc-policies', `${SITE_URL}/1perc/policy`, '1perc', '1perc — Privacy Policy (canonical)'],
   ['1perc-privacy', `${SITE_URL}/1perc/policy`, '1perc', '1perc — Privacy (alias)'],
+  ['1perc-policy', `${SITE_URL}/1perc/policy`, '1perc', '1perc — Privacy (alias)'],
   ['1perc-terms', `${SITE_URL}/1perc/terms`, '1perc', '1perc — Terms (alias)'],
   ['1perc-tnc-legacy', `${SITE_URL}/1perc/tnc`, '1perc', '1perc — Terms (legacy URL alias)'],
   [
