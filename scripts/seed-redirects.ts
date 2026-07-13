@@ -136,19 +136,67 @@ const REDIRECTS: Array<[string, string, string, string]> = [
   // Legal pages — shortcuts for App Store / Play Store metadata, QR codes,
   // and in-app "Open Legal" buttons. These URLs are stable even if we
   // later restructure the site.
-  ['heal-tnc', `${SITE_URL}/heal/tnc`, 'heal', 'HEAL — Terms and Conditions'],
-  ['heal-policies', `${SITE_URL}/heal/policies`, 'heal', 'HEAL — Privacy Policy'],
-  ['heal-privacy', `${SITE_URL}/heal/policies`, 'heal', 'Alias for heal-policies'],
-  ['heal-terms', `${SITE_URL}/heal/tnc`, 'heal', 'Alias for heal-tnc'],
+  // CANONICAL paths are /<app>/terms and /<app>/policy. The /tnc and /policies
+  // legacy aliases still resolve and are listed as backwards-compat shortcuts
+  // for any app-store metadata that was already published with the old URLs.
+  ['heal-tnc', `${SITE_URL}/heal/terms`, 'heal', 'HEAL — Terms and Conditions (canonical)'],
+  ['heal-policies', `${SITE_URL}/heal/policy`, 'heal', 'HEAL — Privacy Policy (canonical)'],
+  ['heal-privacy', `${SITE_URL}/heal/policy`, 'heal', 'HEAL — Privacy Policy (alias)'],
+  ['heal-terms', `${SITE_URL}/heal/terms`, 'heal', 'HEAL — Terms (alias)'],
+  // Legacy URLs (already published in some metadata) — keep these as additional
+  // shortcuts so old links still work.
+  ['heal-tnc-legacy', `${SITE_URL}/heal/tnc`, 'heal', 'HEAL — Terms (legacy URL alias)'],
+  [
+    'heal-policies-legacy',
+    `${SITE_URL}/heal/policies`,
+    'heal',
+    'HEAL — Privacy (legacy URL alias)',
+  ],
   // Regional variants for app stores that don't accept direct URLs with paths.
-  ['legal-privacy', `${SITE_URL}/heal/policies`, '', 'Generic Privacy Policy'],
-  ['legal-terms', `${SITE_URL}/heal/tnc`, '', 'Generic Terms'],
+  ['legal-privacy', `${SITE_URL}/heal/policy`, '', 'Generic Privacy Policy'],
+  ['legal-terms', `${SITE_URL}/heal/terms`, '', 'Generic Terms'],
 
   // 1perc — Book Summary App legal shortcuts
-  ['1perc-tnc', `${SITE_URL}/1perc/tnc`, '1perc', '1perc — Terms and Conditions'],
-  ['1perc-policies', `${SITE_URL}/1perc/policies`, '1perc', '1perc — Privacy Policy'],
-  ['1perc-privacy', `${SITE_URL}/1perc/policies`, '1perc', 'Alias for 1perc-policies'],
-  ['1perc-terms', `${SITE_URL}/1perc/tnc`, '1perc', 'Alias for 1perc-tnc'],
+  ['1perc-tnc', `${SITE_URL}/1perc/terms`, '1perc', '1perc — Terms and Conditions (canonical)'],
+  ['1perc-policies', `${SITE_URL}/1perc/policy`, '1perc', '1perc — Privacy Policy (canonical)'],
+  ['1perc-privacy', `${SITE_URL}/1perc/policy`, '1perc', '1perc — Privacy (alias)'],
+  ['1perc-terms', `${SITE_URL}/1perc/terms`, '1perc', '1perc — Terms (alias)'],
+  ['1perc-tnc-legacy', `${SITE_URL}/1perc/tnc`, '1perc', '1perc — Terms (legacy URL alias)'],
+  [
+    '1perc-policies-legacy',
+    `${SITE_URL}/1perc/policies`,
+    '1perc',
+    '1perc — Privacy (legacy URL alias)',
+  ],
+
+  // Riseup — Habit / Morning-Routine App legal shortcuts
+  [
+    'riseup-terms',
+    `${SITE_URL}/riseup/terms`,
+    'riseup',
+    'Riseup — Terms and Conditions (canonical)',
+  ],
+  ['riseup-tnc', `${SITE_URL}/riseup/terms`, 'riseup', 'Riseup — Terms (alias)'],
+  ['riseup-policy', `${SITE_URL}/riseup/policy`, 'riseup', 'Riseup — Privacy Policy (canonical)'],
+  ['riseup-policies', `${SITE_URL}/riseup/policy`, 'riseup', 'Riseup — Privacy (alias)'],
+  ['riseup-privacy', `${SITE_URL}/riseup/policy`, 'riseup', 'Riseup — Privacy (alias)'],
+
+  // Resonate — Tuner / Music App legal shortcuts
+  [
+    'resonate-terms',
+    `${SITE_URL}/resonate/terms`,
+    'resonate',
+    'Resonate — Terms and Conditions (canonical)',
+  ],
+  ['resonate-tnc', `${SITE_URL}/resonate/terms`, 'resonate', 'Resonate — Terms (alias)'],
+  [
+    'resonate-policy',
+    `${SITE_URL}/resonate/policy`,
+    'resonate',
+    'Resonate — Privacy Policy (canonical)',
+  ],
+  ['resonate-policies', `${SITE_URL}/resonate/policy`, 'resonate', 'Resonate — Privacy (alias)'],
+  ['resonate-privacy', `${SITE_URL}/resonate/policy`, 'resonate', 'Resonate — Privacy (alias)'],
 ]
 
 async function main() {

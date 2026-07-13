@@ -1,5 +1,5 @@
 /**
- * 1perc — Privacy Policy
+ * 1perc — Privacy Policy (alias route)
  *
  * Live URL referenced from App Store / Play Store metadata for the 1perc app.
  *
@@ -23,10 +23,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '1perc — Privacy Policy',
+  title: '1perc — Privacy Policy (alias route)',
   description:
     'Privacy policy for the 1perc book-summary app. Covers local-first storage, reading-progress data, subscription receipt handling, regional rights (GDPR, CCPA, PDPA, LGPD), and how to exercise your rights.',
-  alternates: { canonical: `${SITE_URL}/1perc/policies` },
+  alternates: { canonical: `${SITE_URL}/1perc/policy` },
   robots: { index: true, follow: true },
 }
 
@@ -76,7 +76,7 @@ export default function OnepercPrivacyPage() {
           <span className="chip">Privacy</span>
         </div>
         <h1 className="text-display-md md:text-display-lg font-bold tracking-tight mb-3">
-          1perc — Privacy Policy
+          1perc — Privacy Policy (alias route)
         </h1>
         <p className="text-mute text-lg mb-2">
           What we collect, what we don't, where your data lives, and how to control it.
@@ -87,7 +87,7 @@ export default function OnepercPrivacyPage() {
         </p>
         <p className="text-sm text-mute mt-2">
           Looking for the Terms?{' '}
-          <Link href="/1perc/terms" className="text-coral underline">
+          <Link href="/1perc/tnc" className="text-coral underline">
             See 1perc — Terms and Conditions
           </Link>
           .
@@ -979,7 +979,7 @@ export default function OnepercPrivacyPage() {
           </li>
         </ul>
         <p>
-          See the 1perc Terms and Conditions (<Link href="/1perc/terms">/1perc/tnc</Link>) for the
+          See the 1perc Terms and Conditions (<Link href="/1perc/tnc">/1perc/tnc</Link>) for the
           legal terms governing the Service.
         </p>
       </article>

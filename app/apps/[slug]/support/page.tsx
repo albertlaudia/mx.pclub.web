@@ -23,10 +23,30 @@ export default async function AppSupportPage({ params }: { params: Promise<{ slu
   const app = await getApp(slug)
   if (!app) notFound()
 
-  // Per-app support pages: HEAL and 1perc each have dedicated legal pages.
-  const legalSlug = app.slug === 'heal' ? 'heal' : app.slug === '1perc' ? '1perc' : null
-  const hasDedicatedLegal = legalSlug !== null
-  const legalLabel = app.slug === 'heal' ? 'HEAL' : app.name
+  // All 4 apps have dedicated legal pages at /<slug>/terms and /<slug>/policy
+  // (cleaner URL convention; /tnc and /policies remain as legacy aliases).
+  const legalSlugs = ['heal', '1perc', 'riseup', 'resonate'] as const
+  const hasDedicatedLegal = (legalSlugs as readonly string[]).includes(app.slug)
+  const legalSlug = hasDedicatedLegal ? app.slug : null
+  const legalLabel = app.name
+
+  const termsBlurb =
+    app.slug === 'heal'
+      ? 'Subscription terms, medical disclaimer, arbitration.'
+      : app.slug === '1perc'
+        ? 'Subscription terms, fair-use / copyright position, voice-talent notices, arbitration.'
+        : app.slug === 'riseup'
+          ? 'Subscription terms, no-medical-advice, arbitration.'
+          : 'Subscription terms, music-content licence, mic-data handling, arbitration.'
+
+  const privacyBlurb =
+    app.slug === 'heal'
+      ? 'Local-first, no analytics, no tracking.'
+      : app.slug === '1perc'
+        ? 'Local-first, no analytics, reading-progress data handled on-device.'
+        : app.slug === 'riseup'
+          ? 'Local-first, no analytics, no tracking.'
+          : 'Local-first, mic on-device only, no analytics.'
 
   return (
     <article className="container-narrow py-16 md:py-24">
@@ -61,28 +81,20 @@ export default async function AppSupportPage({ params }: { params: Promise<{ slu
         <div className="mt-8">
           <h2 className="font-semibold mb-3">Legal & policies</h2>
           <div className="grid gap-4 md:grid-cols-2">
-            <Link href={`/${legalSlug}/tnc`} className="card card-hover group">
+            <Link href={`/${legalSlug}/terms`} className="card card-hover group">
               <FileText className="text-coral mb-3" size={24} />
               <h3 className="font-semibold mb-1">Terms & Conditions</h3>
-              <p className="text-sm text-mute">
-                {app.slug === 'heal'
-                  ? 'Subscription terms, medical disclaimer, arbitration.'
-                  : 'Subscription terms, fair-use / copyright position, voice-talent notices, arbitration.'}
-              </p>
+              <p className="text-sm text-mute">{termsBlurb}</p>
               <p className="text-xs text-mute mt-2 group-hover:text-coral">
-                Read /{legalSlug}/tnc →
+                Read /{legalSlug}/terms →
               </p>
             </Link>
-            <Link href={`/${legalSlug}/policies`} className="card card-hover group">
+            <Link href={`/${legalSlug}/policy`} className="card card-hover group">
               <FileText className="text-coral mb-3" size={24} />
               <h3 className="font-semibold mb-1">Privacy Policy</h3>
-              <p className="text-sm text-mute">
-                {app.slug === 'heal'
-                  ? 'Local-first, no analytics, no tracking.'
-                  : 'Local-first, no analytics, reading-progress data handled on-device.'}
-              </p>
+              <p className="text-sm text-mute">{privacyBlurb}</p>
               <p className="text-xs text-mute mt-2 group-hover:text-coral">
-                Read /{legalSlug}/policies →
+                Read /{legalSlug}/policy →
               </p>
             </Link>
           </div>

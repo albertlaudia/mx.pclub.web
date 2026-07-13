@@ -1,21 +1,18 @@
 /**
- * 1perc — Privacy Policy
+ * HEAL — Privacy Policy (URL: /heal/policy)
  *
- * Live URL referenced from App Store / Play Store metadata for the 1perc app.
+ * This is the canonical / preferred URL for the HEAL privacy policy.
+ * The legacy /heal/policies route renders the same content for backwards
+ * compatibility with already-shared App Store / Play Store links.
  *
- * Drafting notes (not part of the legal text):
- *   - 1perc is a book-summary app, so the data inventory differs from HEAL:
- *       * Reading progress (current book, last position, completion %)
- *       * Highlights, bookmarks, notes (if added later)
- *       * Audio: listening history, last position, download state, voice preference
- *       * Subscription status (handled by Apple/Google — we only see masked receipts)
- *   - Same privacy-first philosophy: on-device storage as default, no analytics,
- *     no third-party trackers, optional cloud sync only with explicit consent.
- *   - 29 sections, same shape as /heal/policies for consistency.
- *   - Operator-biased but jurisdictionally aware (GDPR, CCPA/CPRA, PDPA SG,
- *     LGPD, UU PDP, Privacy Act AU, PIPEDA CA, etc.).
- *   - Must be reviewed by licensed counsel before launch.
- *   - Version: v1.0  2026-07-01
+ * Drafting notes:
+ *   - HEAL is local-first by design. No analytics, no third-party trackers,
+ *     no advertising SDKs, no fingerprinting.
+ *   - Subscription data is handled by Apple/Google (we see only masked receipts).
+ *   - Regional rights: GDPR/UK-GDPR, CCPA/CPRA, PDPA Singapore, LGPD, UU PDP,
+ *     PDPA Thailand, PIPA Korea, APPI Japan, DPDP India, etc.
+ *   - Not legal advice — must be reviewed by licensed counsel.
+ *   - Version: v1.0  2026-07-13
  */
 
 import { SITE_URL } from '@/lib/seo'
@@ -23,16 +20,16 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '1perc — Privacy Policy',
+  title: 'HEAL — Privacy Policy',
   description:
-    'Privacy policy for the 1perc book-summary app. Covers local-first storage, reading-progress data, subscription receipt handling, regional rights (GDPR, CCPA, PDPA, LGPD), and how to exercise your rights.',
-  alternates: { canonical: `${SITE_URL}/1perc/policies` },
+    'Privacy policy for the HEAL app. Covers local-first storage of mood, journal, and listening data; no analytics; regional rights under GDPR, CCPA, PDPA, LGPD; and how to exercise your data rights.',
+  alternates: { canonical: `${SITE_URL}/heal/policy` },
   robots: { index: true, follow: true },
 }
 
 export const dynamic = 'force-static'
 
-const LAST_UPDATED = '2026-07-01'
+const LAST_UPDATED = '2026-07-13'
 const VERSION = 'v1.0'
 
 const SECTIONS = [
@@ -67,16 +64,16 @@ const SECTIONS = [
   { id: 'contact', title: '29. How to Contact Us' },
 ]
 
-export default function OnepercPrivacyPage() {
+export default function HealPolicyPage() {
   return (
     <main className="container-narrow py-12 md:py-20">
       <header className="mb-12">
         <div className="flex items-center gap-3 mb-4">
-          <span className="chip">1perc</span>
+          <span className="chip">HEAL</span>
           <span className="chip">Privacy</span>
         </div>
         <h1 className="text-display-md md:text-display-lg font-bold tracking-tight mb-3">
-          1perc — Privacy Policy
+          HEAL — Privacy Policy
         </h1>
         <p className="text-mute text-lg mb-2">
           What we collect, what we don't, where your data lives, and how to control it.
@@ -87,8 +84,8 @@ export default function OnepercPrivacyPage() {
         </p>
         <p className="text-sm text-mute mt-2">
           Looking for the Terms?{' '}
-          <Link href="/1perc/terms" className="text-coral underline">
-            See 1perc — Terms and Conditions
+          <Link href="/heal/terms" className="text-coral underline">
+            See HEAL — Terms and Conditions
           </Link>
           .
         </p>
@@ -101,7 +98,7 @@ export default function OnepercPrivacyPage() {
         <h2 className="font-semibold mb-3 text-lg">Privacy at a glance</h2>
         <ul className="space-y-2 text-sm">
           <li>
-            ✅ Your reading progress, highlights, and notes are stored{' '}
+            ✅ Your mood logs, journal entries, and listening history are stored{' '}
             <strong>locally on your device</strong> by default. We do not upload them.
           </li>
           <li>
@@ -116,8 +113,8 @@ export default function OnepercPrivacyPage() {
             not your card.
           </li>
           <li>
-            ✅ Audio narration is downloaded and cached on your device. We do not collect listening
-            events unless you opt in to "Share listening stats to improve summaries".
+            ✅ Audio sessions are downloaded and cached on your device. We do not collect listening
+            events unless you opt in to "Share listening stats to improve sessions".
           </li>
           <li>
             ✅ You can <strong>delete everything we hold about you</strong> at any time, in-app or
@@ -152,14 +149,14 @@ export default function OnepercPrivacyPage() {
             logs (only with your consent), and any data you explicitly submit (e.g. support emails).
           </li>
           <li>
-            <strong>What we do not collect:</strong> Your reading history, your highlights, your
-            notes, your listening history, your location, your contacts, your photos, your
-            microphone audio (beyond voice-input features that you explicitly enable), your
-            biometrics, your advertising ID.
+            <strong>What we do not collect:</strong> Your mood logs, journal entries, listening
+            history, location, contacts, photos, microphone audio (beyond an opt-in voice-input
+            feature in future versions), biometrics, advertising IDs, or any "special category" data
+            under GDPR Art. 9.
           </li>
           <li>
             <strong>Where your data lives:</strong> On your device. By default we do not upload your
-            reading history to any server.
+            health, mood, journal, or listening data to any server.
           </li>
           <li>
             <strong>Where decisions about your data are made:</strong> Singapore (see §2).
@@ -197,7 +194,7 @@ export default function OnepercPrivacyPage() {
         <p>This Policy describes:</p>
         <ul>
           <li>
-            the personal data the Company collects from Users through the 1perc App and related
+            the personal data the Company collects from Users through the HEAL App and related
             services (the <strong>"Service"</strong>);
           </li>
           <li>how the Company uses that data;</li>
@@ -215,12 +212,12 @@ export default function OnepercPrivacyPage() {
             Apple's and Google's privacy policies.
           </li>
           <li>
-            Data you submit to third-party retailers when buying a Source Book — those are governed
-            by the retailer's privacy policy.
+            Data you submit to voice-talent agencies if you independently contact them to inquire
+            about narrating for HEAL.
           </li>
           <li>
-            Data you submit to voice-talent agencies if you independently contact them to inquire
-            about narrating for 1perc.
+            Data you submit to clinical professionals, therapists, or any health service outside
+            HEAL.
           </li>
         </ul>
 
@@ -234,12 +231,12 @@ export default function OnepercPrivacyPage() {
         <ul>
           <li>
             <strong>App version, device model, OS version, locale.</strong> Reason: deliver a
-            Summary in your language and to a compatible format. Stored locally; we see aggregated
+            session in your language and to a compatible format. Stored locally; we see aggregated
             counts only.
           </li>
           <li>
             <strong>Subscription status (masked receipt from the Store).</strong> Reason: know
-            whether you have access to Pro-tier Summaries. The receipt is delivered by Apple or
+            whether you have access to Pro-tier sessions. The receipt is delivered by Apple or
             Google and contains no card details.
           </li>
           <li>
@@ -266,13 +263,9 @@ export default function OnepercPrivacyPage() {
             Your name, address, phone number, or date of birth (unless you provide it to us in
             support correspondence).
           </li>
+          <li>Your mood logs, journal entries, or session notes (kept on-device).</li>
           <li>
-            Your reading history, completion percentages, or list of completed books (kept
-            on-device).
-          </li>
-          <li>Your highlights, bookmarks, notes, or any user-generated content.</li>
-          <li>
-            Your listening history, audio playback position, voice preferences (kept on-device).
+            Your listening history, audio playback position, or voice preferences (kept on-device).
           </li>
           <li>
             Your contact list, address book, photos, microphone audio (other than an opt-in
@@ -283,43 +276,43 @@ export default function OnepercPrivacyPage() {
             device advertising IDs (IDFA, GAID, OAID).
           </li>
           <li>
-            Your biometric data, health data, financial data, sexual-orientation data, racial or
-            ethnic data, or any other "special category" data under GDPR Art. 9.
+            Your biometric data, mental-health data, sexual-orientation data, racial or ethnic data,
+            or any other "special category" data under GDPR Art. 9.
           </li>
           <li>App Tracking Transparency (ATT) prompt data — we never trigger the ATT prompt.</li>
         </ul>
 
         <h3>4.3 Optional: "Share listening stats" (off by default)</h3>
         <p>
-          If you opt in to <em>Settings → Privacy → Share listening stats to improve summaries</em>,
+          If you opt in to <em>Settings → Privacy → Share listening stats to improve sessions</em>,
           we collect:
         </p>
         <ul>
           <li>
-            the Source Book and Summary identifier (e.g. <code>atomic-habits-001</code>);
+            the session identifier (e.g. <code>breathwork-morning-014</code>);
           </li>
-          <li>whether you finished the Summary and your progress percent;</li>
-          <li>whether you read or listened;</li>
+          <li>whether you finished the session and your progress percent;</li>
+          <li>whether you listened or paused partway;</li>
           <li>
             an opaque, rotating, salted identifier that does not link back to you across sessions.
           </li>
         </ul>
         <p>
-          This data is used only to improve which Summaries we recommend and how we pace them. You
+          This data is used only to improve which sessions we recommend and how we pace them. You
           can revoke this consent at any time and we will stop collecting further data.
         </p>
 
         <h2 id="where">5. Where Your Data Lives (Local-First)</h2>
         <p>
-          By default, <strong>everything you do in 1perc stays on your device</strong>. This
+          By default, <strong>everything you do in HEAL stays on your device</strong>. This
           includes:
         </p>
         <ul>
-          <li>your reading progress, completion %, "currently reading" list;</li>
-          <li>your highlights, bookmarks, notes (if implemented);</li>
-          <li>your audio playback position and listen history;</li>
-          <li>your downloaded Summaries (cached audio + text);</li>
-          <li>your preferences (theme, font size, voice choice, reading speed).</li>
+          <li>your mood and emotion logs;</li>
+          <li>your journal entries and notes;</li>
+          <li>your listening history and session playback position;</li>
+          <li>your downloaded sessions (cached audio + transcripts);</li>
+          <li>your preferences (theme, voice choice, session length).</li>
         </ul>
         <p>
           This data is stored in an encrypted SQLite database on your device (using sqlcipher or the
@@ -347,10 +340,7 @@ export default function OnepercPrivacyPage() {
           </li>
           <li>
             The Company will have{' '}
-            <strong>
-              no technical ability to read your highlights, notes, or reading progress
-            </strong>
-            .
+            <strong>no technical ability to read your mood, journal, or notes</strong>.
           </li>
           <li>You can export, import, and wipe your data from the App at any time.</li>
           <li>Sync is off by default and requires explicit opt-in.</li>
@@ -377,12 +367,21 @@ export default function OnepercPrivacyPage() {
             <strong>Legal obligation</strong> (Art. 6(1)(c)) — to comply with applicable law (e.g.
             tax, accounting, anti-fraud).
           </li>
+          <li>
+            <strong>Vital interests</strong> (Art. 6(1)(d)) — only in the narrow case where you have
+            requested that we share data with a crisis service and we need to share that minimum
+            data to protect your life. (See{' '}
+            <Link href="/heal/terms" className="text-coral underline">
+              HEAL Terms §9
+            </Link>
+            .)
+          </li>
         </ul>
         <p>Where we rely on legitimate interest, you have the right to object (see §12).</p>
 
         <h2 id="children">7. Children</h2>
         <p>
-          1perc is not directed to children under the age thresholds in §4 of our Terms. We do not
+          HEAL is not directed to children under the age thresholds in §4 of our Terms. We do not
           knowingly collect personal data from children below those thresholds. If we learn that we
           have inadvertently collected personal data from a child below the threshold, we will
           delete it as soon as possible.
@@ -864,30 +863,35 @@ export default function OnepercPrivacyPage() {
 
         <h2 id="ai">27. AI, Machine Learning &amp; Voice Synthesis</h2>
         <p>
-          1perc uses AI tools as editorial assistants for summary production, voice synthesis for
-          audio narration, and (in future) for recommendation. We are committed to:
+          HEAL uses AI tools as editorial assistants for session production, voice synthesis for
+          audio, and (in future) for personalisation. We are committed to:
         </p>
         <ul>
           <li>
-            <strong>Not using your personal data to train AI models.</strong> Your reading history,
-            listening history, and personal preferences are not transmitted to any model provider
-            for training.
+            <strong>Not using your personal data to train AI models.</strong> Your mood logs,
+            journal entries, and listening history are not transmitted to any model provider for
+            training.
           </li>
           <li>
             <strong>Not transmitting your personal data to voice-synthesis providers.</strong> Audio
             rendering happens in our pipeline using synthetic voices that are licensed separately.
           </li>
           <li>
-            <strong>Not using audio narration to clone voices.</strong> You may not use any Content
-            to train, fine-tune, evaluate or clone any voice (see /1perc/tnc §7 and §11).
+            <strong>Not using audio sessions to clone voices.</strong> You may not use any Content
+            to train, fine-tune, evaluate or clone any voice (see{' '}
+            <Link href="/heal/terms" className="text-coral underline">
+              HEAL Terms §11
+            </Link>
+            ).
           </li>
           <li>
-            <strong>Transparency.</strong> Where a Summary is generated with significant AI
-            assistance, we will indicate this in the App and at the top of the Summary.
+            <strong>Transparency.</strong> Where a session is generated with significant AI
+            assistance, we will indicate this in the App and at the start of the session.
           </li>
           <li>
-            <strong>Human editorial control.</strong> Every published Summary is reviewed and edited
-            by a human before release.
+            <strong>Human editorial control.</strong> Every published session is reviewed and
+            approved by a qualified human editor (with clinical or scientific credentials) before
+            release.
           </li>
         </ul>
 
@@ -956,8 +960,8 @@ export default function OnepercPrivacyPage() {
             .
           </li>
           <li>
-            <strong>ElevenLabs / PlayHT (or in-house)</strong> — Voice synthesis for audio
-            narration. Used only at synthesis time; we do not transmit personal data to them.
+            <strong>ElevenLabs / PlayHT (or in-house)</strong> — Voice synthesis for audio sessions.
+            Used only at synthesis time; we do not transmit personal data to them.
           </li>
         </ul>
 
@@ -979,8 +983,11 @@ export default function OnepercPrivacyPage() {
           </li>
         </ul>
         <p>
-          See the 1perc Terms and Conditions (<Link href="/1perc/terms">/1perc/tnc</Link>) for the
-          legal terms governing the Service.
+          See the{' '}
+          <Link href="/heal/terms" className="text-coral underline">
+            HEAL Terms and Conditions
+          </Link>{' '}
+          for the legal terms governing the Service.
         </p>
       </article>
 

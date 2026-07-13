@@ -1,5 +1,5 @@
 /**
- * 1perc — Terms and Conditions
+ * 1perc — Terms and Conditions (alias route)
  *
  * Live URL referenced from App Store / Play Store metadata for the 1perc app.
  *
@@ -22,10 +22,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '1perc — Terms and Conditions',
+  title: '1perc — Terms and Conditions (alias route)',
   description:
     'Terms and conditions governing use of the 1perc book-summary app. Includes subscription terms, fair-use / copyright position, voice-talent notices, and limitation of liability.',
-  alternates: { canonical: `${SITE_URL}/1perc/tnc` },
+  alternates: { canonical: `${SITE_URL}/1perc/terms` },
   robots: { index: true, follow: true },
 }
 
@@ -78,7 +78,7 @@ export default function OnepercTermsPage() {
           <span className="chip">Legal</span>
         </div>
         <h1 className="text-display-md md:text-display-lg font-bold tracking-tight mb-3">
-          1perc — Terms and Conditions
+          1perc — Terms and Conditions (alias route)
         </h1>
         <p className="text-mute text-lg mb-2">
           These terms govern your use of the 1perc mobile application. Read them carefully — they
@@ -90,7 +90,7 @@ export default function OnepercTermsPage() {
         </p>
         <p className="text-sm text-mute mt-2">
           Looking for the privacy policy?{' '}
-          <Link href="/1perc/policy" className="text-coral underline">
+          <Link href="/1perc/policies" className="text-coral underline">
             See 1perc — Privacy Policy
           </Link>
           .
@@ -116,9 +116,9 @@ export default function OnepercTermsPage() {
       <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-24 prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-2 prose-a:text-coral">
         <h2 id="acceptance">1. Acceptance of these Terms</h2>
         <p>
-          These Terms and Conditions (these <strong>"Terms"</strong>) form a binding agreement
-          between you and <strong>positiveness.club Pte Ltd</strong> (the <strong>"Company"</strong>
-          ,<strong>"we"</strong>, <strong>"us"</strong> or <strong>"our"</strong>), the operator of
+          These Terms(these <strong>"Terms"</strong>) form a binding agreement between you and{' '}
+          <strong>positiveness.club Pte Ltd</strong> (the <strong>"Company"</strong>,
+          <strong>"we"</strong>, <strong>"us"</strong> or <strong>"our"</strong>), the operator of
           the 1perc mobile application (the <strong>"App"</strong> or <strong>"1perc"</strong>).
         </p>
         <p>
@@ -923,10 +923,10 @@ export default function OnepercTermsPage() {
         <h2 id="entire">28. Entire Agreement</h2>
         <p>
           These Terms, together with the 1perc Privacy Policy (
-          <Link href="/1perc/policy">/1perc/policies</Link>) and any policies or notices referenced
-          within them, constitute the entire agreement between you and the Company with respect to
-          the Service and supersede all prior or contemporaneous communications and proposals,
-          whether oral or written.
+          <Link href="/1perc/policies">/1perc/policies</Link>) and any policies or notices
+          referenced within them, constitute the entire agreement between you and the Company with
+          respect to the Service and supersede all prior or contemporaneous communications and
+          proposals, whether oral or written.
         </p>
 
         <h2 id="assignment">29. Assignment</h2>

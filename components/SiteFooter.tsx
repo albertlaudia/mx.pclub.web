@@ -72,7 +72,7 @@ export async function SiteFooter() {
               </li>
               <li className="pt-2 mt-2 border-t border-line/60">
                 <Link
-                  href="/heal/policies"
+                  href="/heal/policy"
                   className="text-mute hover:text-coral transition-colors text-xs font-medium"
                 >
                   HEAL — Privacy
@@ -80,7 +80,7 @@ export async function SiteFooter() {
               </li>
               <li>
                 <Link
-                  href="/heal/tnc"
+                  href="/heal/terms"
                   className="text-mute hover:text-coral transition-colors text-xs font-medium"
                 >
                   HEAL — Terms
@@ -88,7 +88,7 @@ export async function SiteFooter() {
               </li>
               <li>
                 <Link
-                  href="/1perc/policies"
+                  href="/1perc/policy"
                   className="text-mute hover:text-coral transition-colors text-xs font-medium"
                 >
                   1perc — Privacy
@@ -96,10 +96,42 @@ export async function SiteFooter() {
               </li>
               <li>
                 <Link
-                  href="/1perc/tnc"
+                  href="/1perc/terms"
                   className="text-mute hover:text-coral transition-colors text-xs font-medium"
                 >
                   1perc — Terms
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/riseup/policy"
+                  className="text-mute hover:text-coral transition-colors text-xs font-medium"
+                >
+                  Riseup — Privacy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/riseup/terms"
+                  className="text-mute hover:text-coral transition-colors text-xs font-medium"
+                >
+                  Riseup — Terms
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resonate/policy"
+                  className="text-mute hover:text-coral transition-colors text-xs font-medium"
+                >
+                  Resonate — Privacy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resonate/terms"
+                  className="text-mute hover:text-coral transition-colors text-xs font-medium"
+                >
+                  Resonate — Terms
                 </Link>
               </li>
             </ul>

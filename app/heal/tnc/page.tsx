@@ -94,7 +94,7 @@ export default function HealTermsPage() {
         </p>
         <p className="text-sm text-mute mt-2">
           Looking for the privacy policy?{' '}
-          <Link href="/heal/policies" className="text-coral underline">
+          <Link href="/heal/policy" className="text-coral underline">
             See HEAL — Privacy Policy
           </Link>
           .
@@ -898,7 +898,7 @@ export default function HealTermsPage() {
         <h2 id="entire">28. Entire Agreement</h2>
         <p>
           These Terms, together with the HEAL Privacy Policy (
-          <Link href="/heal/policies">/heal/policies</Link>) and any policies or notices referenced
+          <Link href="/heal/policy">/heal/policies</Link>) and any policies or notices referenced
           within them, constitute the entire agreement between you and the Company with respect to
           the Service and supersede all prior or contemporaneous communications and proposals,
           whether oral or written.

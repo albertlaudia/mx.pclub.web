@@ -22,12 +22,33 @@ export default async function AppPrivacyPage({ params }: { params: Promise<{ slu
   const app = await getApp(slug)
   if (!app) notFound()
 
-  // Per-app privacy pages: HEAL and 1perc each have a dedicated legal package.
-  // For those, link to the canonical /<slug>/policies and /<slug>/tnc routes that
-  // the App Store / Play Store metadata point to.
-  const legalSlug = app.slug === 'heal' ? 'heal' : app.slug === '1perc' ? '1perc' : null
-  const hasDedicatedLegal = legalSlug !== null
-  const legalLabel = app.slug === 'heal' ? 'HEAL' : app.name
+  // All 4 apps have dedicated legal pages at /<slug>/terms and /<slug>/policy
+  // (cleaner URL convention; /tnc and /policies remain as legacy aliases).
+  // Per-app privacy pages link to the canonical routes that App Store / Play
+  // Store metadata point to.
+  const legalSlugs = ['heal', '1perc', 'riseup', 'resonate'] as const
+  const hasDedicatedLegal = (legalSlugs as readonly string[]).includes(app.slug)
+  const legalSlug = hasDedicatedLegal ? app.slug : null
+  const legalLabel = app.name
+
+  // Short, app-specific bullet that goes after the link
+  const privacyBlurb =
+    app.slug === 'heal'
+      ? 'local-first, no analytics, no tracking'
+      : app.slug === '1perc'
+        ? 'local-first, no analytics, IP/copyright handling'
+        : app.slug === 'riseup'
+          ? 'local-first, no analytics, no tracking'
+          : 'local-first, mic on-device only, no analytics'
+
+  const termsBlurb =
+    app.slug === 'heal'
+      ? 'subscription, medical disclaimer, arbitration'
+      : app.slug === '1perc'
+        ? 'subscription, fair-use, voice talent, arbitration'
+        : app.slug === 'riseup'
+          ? 'subscription, no-medical-advice, arbitration'
+          : 'subscription, music-content licence, mic-data handling, arbitration'
 
   return (
     <article className="container-narrow py-16 md:py-24">
@@ -51,28 +72,16 @@ export default async function AppPrivacyPage({ params }: { params: Promise<{ slu
           </p>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href={`/${legalSlug}/policies`} className="text-coral underline font-medium">
+              <Link href={`/${legalSlug}/policy`} className="text-coral underline font-medium">
                 {legalLabel} — Privacy Policy
               </Link>{' '}
-              <span className="text-mute">
-                (
-                {app.slug === 'heal'
-                  ? 'local-first, no analytics, no tracking'
-                  : 'local-first, no analytics, IP/copyright handling'}
-                )
-              </span>
+              <span className="text-mute">({privacyBlurb})</span>
             </li>
             <li>
-              <Link href={`/${legalSlug}/tnc`} className="text-coral underline font-medium">
+              <Link href={`/${legalSlug}/terms`} className="text-coral underline font-medium">
                 {legalLabel} — Terms and Conditions
               </Link>{' '}
-              <span className="text-mute">
-                (
-                {app.slug === 'heal'
-                  ? 'subscription, medical disclaimer, arbitration'
-                  : 'subscription, fair-use, voice talent, arbitration'}
-                )
-              </span>
+              <span className="text-mute">({termsBlurb})</span>
             </li>
           </ul>
         </div>

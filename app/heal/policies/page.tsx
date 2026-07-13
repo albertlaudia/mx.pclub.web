@@ -92,7 +92,7 @@ export default function HealPoliciesPage() {
         </p>
         <p className="text-sm text-mute mt-2">
           Looking for the user agreement?{' '}
-          <Link href="/heal/tnc" className="text-coral underline">
+          <Link href="/heal/terms" className="text-coral underline">
             See HEAL — Terms and Conditions
           </Link>
           .
